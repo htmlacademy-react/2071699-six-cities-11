@@ -1,13 +1,8 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Галина Соцкова](https://up.htmlacademy.ru/react/11/user/2071699).
-<<<<<<< HEAD
-* Наставник: [Михаил Карямин](https://htmlacademy.ru/profile/id959581).
-=======
 * Наставник: [Михаил Карямин] (https://htmlacademy.ru/profile/id959581).
->>>>>>> 9ccbbee767a80cb8e0b0bb57057adbbd7a8b03d7
 
----
 
 _Не удаляйте и не изменяйте папки и файлы:_
 _`.editorconfig`, `.gitattributes`, `.gitignore`._
