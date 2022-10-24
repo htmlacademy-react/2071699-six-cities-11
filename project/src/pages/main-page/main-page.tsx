@@ -1,9 +1,10 @@
 import CardScreen from '../../components/app/card';
+import * as _ from 'lodash';
 
 type Offers = {
   offersCount: number;
 }
-
+console.log(_.isEqual(1, 2));
 
 function MainPage({offersCount}: Offers): JSX.Element {
   return (
