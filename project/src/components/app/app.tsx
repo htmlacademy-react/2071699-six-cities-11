@@ -1,12 +1,18 @@
 import MainPage from '../../pages/main-page/main-page';
 
-type OffersProps = {
-  offersCount: number;
+interface OfferCard {
+	imgSrc: string;
+  coast: number;
 }
 
-function App({offersCount}: OffersProps): JSX.Element {
+type OffersProps = {
+  offersCount: number;
+  offersList: ReadonlyArray<OfferCard>;
+}
+
+function App({offersCount, offersList}: OffersProps): JSX.Element {
   return (
-    <MainPage offersCount={offersCount} />
+    <MainPage offersCount={offersCount} offersList={offersList} />
   );
 }
 

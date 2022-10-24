@@ -1,12 +1,17 @@
 import CardScreen from '../../components/app/card';
-import * as _ from 'lodash';
+import _ from 'lodash';
+
+interface OfferCard {
+	imgSrc: string;
+  coast: number;
+}
 
 type Offers = {
   offersCount: number;
+  offersList: ReadonlyArray<OfferCard>;
 }
-console.log(_.isEqual(1, 2));
 
-function MainPage({offersCount}: Offers): JSX.Element {
+function MainPage({offersCount, offersList}: Offers): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -98,12 +103,7 @@ function MainPage({offersCount}: Offers): JSX.Element {
               </form>
               <div className="cities__places-list places__list tabs__content">
 
-
-                <CardScreen imgSrc ='img/apartment-03.jpg' coast={180}/>
-                <CardScreen imgSrc ='img/apartment-01.jpg' coast={120}/>
-                <CardScreen imgSrc ='img/room.jpg' coast={80}/>
-                <CardScreen imgSrc ='img/apartment-02.jpg' coast={132}/>
-                <CardScreen imgSrc ='img/room.jpg' coast={60}/>
+                {_.range(offersList.length).map((x) => <CardScreen key={x} imgSrc ={offersList[x].imgSrc} coast={offersList[x].coast}/>)}
 
               </div>
             </section>
