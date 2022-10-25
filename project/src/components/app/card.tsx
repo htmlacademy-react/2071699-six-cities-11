@@ -1,9 +1,9 @@
-type CardsData = {
+type CardsProps = {
   imgSrc: string;
   coast: number;
 }
 
-function CardScreen({imgSrc,coast}:CardsData): JSX.Element {
+function CardScreen({imgSrc,coast}:CardsProps): JSX.Element {
   return (
     <article className="cities__card place-card">
       <div className="place-card__mark">
