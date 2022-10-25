@@ -1,14 +1,14 @@
 import CardScreen from '../../components/app/card';
-import _ from 'lodash';
 
 interface OfferCard {
+  id: number;
 	imgSrc: string;
   coast: number;
 }
 
 type Offers = {
   offersCount: number;
-  offersList: ReadonlyArray<OfferCard>;
+  offersList: OfferCard[];
 }
 
 function MainPage({offersCount, offersList}: Offers): JSX.Element {
@@ -103,7 +103,7 @@ function MainPage({offersCount, offersList}: Offers): JSX.Element {
               </form>
               <div className="cities__places-list places__list tabs__content">
 
-                {_.range(offersList.length).map((x) => <CardScreen key={x} imgSrc ={offersList[x].imgSrc} coast={offersList[x].coast}/>)}
+                {offersList.map((offer) => <CardScreen key={offer.id} imgSrc ={offer.imgSrc} coast={offer.coast}/>)}
 
               </div>
             </section>

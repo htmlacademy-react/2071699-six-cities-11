@@ -1,13 +1,14 @@
 import MainPage from '../../pages/main-page/main-page';
 
 interface OfferCard {
+  id: number;
 	imgSrc: string;
   coast: number;
 }
 
 type OffersProps = {
   offersCount: number;
-  offersList: ReadonlyArray<OfferCard>;
+  offersList: OfferCard[];
 }
 
 function App({offersCount, offersList}: OffersProps): JSX.Element {
