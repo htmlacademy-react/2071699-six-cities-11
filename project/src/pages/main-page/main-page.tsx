@@ -1,4 +1,4 @@
-import CardScreen from '../../components/app/card';
+import CardScreen from '../../components/card/card';
 
 interface OfferCard {
   id: number;
