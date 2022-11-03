@@ -12,8 +12,8 @@ export enum AuthorizationStatus {
 }
 
 export enum HouseTypes {
-  APARTMENT = 'apartment',
-  ROOM = 'room',
-  HOUSE = 'house',
-  HOTEL = 'hotel'
+  Apartment = 'apartment',
+  Room = 'room',
+  House = 'house',
+  Hotel = 'hotel'
 }

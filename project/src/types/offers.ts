@@ -1,31 +1,31 @@
-export type hostType = {
+export type HostType = {
   avatarUrl: string;
   id: number;
   isPro: boolean;
   name: string;
   }
-export type locationType ={
+export type LocationType ={
     latitude: number;
     longitude: number;
     zoom: number;
     };
-export type cityType = {
-      location:locationType;
+export type CityType = {
+      location:LocationType;
       name: string;
       };
 
 export type OfferType = {
   id: number;
   bedrooms: number;
-  city: cityType;
+  city: CityType;
   description: string;
   goods: string[];
-  host: hostType;
+  host: HostType;
   images: string[];
   isFavorite: boolean;
   isPremium: boolean;
   maxAdults: number;
-  photo: string;
+  previewImage: string;
   price: number;
   rating: number;
   title: string;
