@@ -9,7 +9,7 @@ type OffersListProps = {
 
 function OffersList({offersList, pageType}: OffersListProps): JSX.Element {
   const [cardData, setCardData] = useState({
-    cardId: 0,
+    cardId: -1,
     isActive: false,
   });
 

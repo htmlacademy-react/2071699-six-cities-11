@@ -67,7 +67,7 @@ function FavoritesPageEmpty(): JSX.Element {
 
 function FavoritesPageOffer({offersFavorList}: OffersListProps): JSX.Element {
   const [cardData, setCardData] = useState({
-    cardId: 0,
+    cardId: -1,
     isActive: false,
   });
 

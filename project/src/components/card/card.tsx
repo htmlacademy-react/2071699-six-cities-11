@@ -1,6 +1,7 @@
 import {OfferType} from '../../types/offers';
 import {AppRoute} from '../../constants';
 import {Link} from 'react-router-dom';
+import {useState, useEffect} from 'react';
 
 type CardProps = {
   card: OfferType;
@@ -10,46 +11,48 @@ type CardProps = {
 
 function CardScreen(props:CardProps): JSX.Element {
   const {card, onChangeCard, pageType} = props;
-  let SettingPage = {
+  const [settingPage, setSettingPage] = useState({
     widthImg: '260',
     heightImg: '200',
     addClassName: ''
-  };
-  switch (pageType) {
-    case AppRoute.Main:
-      SettingPage = {
-        widthImg: '260',
-        heightImg: '200',
-        addClassName: ''
-      };
-      break;
-    case AppRoute.Favorites:
-      SettingPage = {
-        widthImg: '150',
-        heightImg: '110',
-        addClassName: 'favorites'
-      };
-      break;
-  }
+  });
+
+  useEffect(() => {
+    switch (pageType) {
+      case AppRoute.Main:
+        setSettingPage({
+          widthImg: '260',
+          heightImg: '200',
+          addClassName: ''
+        });
+        break;
+      case AppRoute.Favorites:
+        setSettingPage({
+          widthImg: '150',
+          heightImg: '110',
+          addClassName: 'favorites'
+        });
+        break;
+    }}, [pageType]);
 
   return (
     <article
-      className={`${SettingPage.addClassName ? 'favorites__card' : 'cities__card'} place-card`}
+      className={`${settingPage.addClassName ? 'favorites__card' : 'cities__card'} place-card`}
       onMouseEnter={() => {onChangeCard(card.id, true);}}
-      onMouseLeave={() => {onChangeCard(0, false);}}
+      onMouseLeave={() => {onChangeCard(-1, false);}}
     >
       {card.isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
         </div> : '' }
       <div
-        className={`${SettingPage.addClassName ? 'favorites__image-wrapper' : 'cities__image-wrapper'} place-card__image-wrapper`}
+        className={`${settingPage.addClassName ? 'favorites__image-wrapper' : 'cities__image-wrapper'} place-card__image-wrapper`}
       >
         <a href="/">
-          <img className="place-card__image" src={card.previewImage} width={SettingPage.widthImg} height={SettingPage.heightImg} alt="Place" />
+          <img className="place-card__image" src={card.previewImage} width={settingPage.widthImg} height={settingPage.heightImg} alt="Place" />
         </a>
       </div>
-      <div className={`${SettingPage.addClassName ? 'favorites__card-info ' : ''} place-card__info`}>
+      <div className={`${settingPage.addClassName ? 'favorites__card-info ' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{card.price}</b>
