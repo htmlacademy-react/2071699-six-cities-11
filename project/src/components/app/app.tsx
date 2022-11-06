@@ -6,19 +6,17 @@ import LoginPage from '../../pages/login-page/login-page';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PropertyPage from '../../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
-
-interface OfferCard {
-  id: number;
-	imgSrc: string;
-  coast: number;
-}
+import {OfferType} from '../../types/offers';
+import {CommentType} from '../../types/comments';
 
 type OffersProps = {
   offersCount: number;
-  offersList: OfferCard[];
+  offersList: OfferType[];
+  commentsList: CommentType[];
 }
 
-function App({offersCount, offersList}: OffersProps): JSX.Element {
+function App({offersCount, offersList, commentsList}: OffersProps): JSX.Element {
+  const offersFavotiteList: OfferType[] = offersList.filter((offer) => offer.isFavorite) ;
   return (
     <BrowserRouter>
       <Routes>
@@ -34,15 +32,15 @@ function App({offersCount, offersList}: OffersProps): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
             >
-              <FavoritesPage />
+              <FavoritesPage offersFavorList={offersFavotiteList}/>
             </PrivateRoute>
           }
         />
         <Route
           path={`${AppRoute.Property}/:id`}
-          element={<PropertyPage />}
+          element={<PropertyPage offersList={offersList} commentsList={commentsList}/>}
         />
         <Route
           path="*"
