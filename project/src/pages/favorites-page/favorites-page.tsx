@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import CardScreen from '../../components/card/card';
 import {OfferType} from '../../types/offers';
 import {Link} from 'react-router-dom';
@@ -66,12 +65,8 @@ function FavoritesPageEmpty(): JSX.Element {
   );}
 
 function FavoritesPageOffer({offersFavorList}: OffersListProps): JSX.Element {
-  const [cardData, setCardData] = useState({
-    cardId: -1,
-    isActive: false,
-  });
 
-  const citiesList: string[] = [...new Set(offersFavorList.map((el)=> el.city.name))] as string[];
+  const citiesList: string[] = [...new Set(offersFavorList.map((el)=> el.city.name))];
 
   return (
     <main className="page__main page__main--favorites">
@@ -95,7 +90,7 @@ function FavoritesPageOffer({offersFavorList}: OffersListProps): JSX.Element {
                         key={offer.id}
                         card={offer}
                         pageType={AppRoute.Favorites}
-                        onChangeCard={(id: number, sign: boolean) => setCardData({...cardData, cardId: id, isActive: sign})}
+                        onChangeCard={() => -1}
                       />))}
                 </div>
               </li>

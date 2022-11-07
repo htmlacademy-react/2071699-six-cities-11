@@ -1,14 +1,29 @@
 import OffersList from '../../components/offers-list/offers-list';
-import {OfferType} from '../../types/offers';
-import {AppRoute} from '../../constants';
-
+import {OfferType, CityType, LocationType} from '../../types/offers';
+import {AppRoute, CITYCENTER} from '../../constants';
+import Map from '../../components/map/map';
+import {useState} from 'react';
 
 type OffersProps = {
   offersCount: number;
   offersList: OfferType[];
 }
 
+function getPointsForCity (cityName: string, offersList: OfferType[]): LocationType[] {
+  const offersForCity: CityType[] = offersList.filter((offer) => offer.city.name === cityName).map((el)=> el.city);
+  return offersForCity.map((el)=> el.location);
+}
+
 function MainPage({offersCount, offersList}: OffersProps): JSX.Element {
+
+  const [selectedPoint, setSelectedPoint] = useState<LocationType | undefined>(
+    undefined
+  );
+
+  const onListCardHover = (id: number) => {
+    const currentPoint = offersList.find((offer) => offer.id === id)?.city.location;
+    setSelectedPoint(currentPoint);
+  };
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -99,11 +114,16 @@ function MainPage({offersCount, offersList}: OffersProps): JSX.Element {
                 </ul>
               </form>
 
-              <OffersList offersList={offersList} pageType={AppRoute.Main}/>
+              <OffersList
+                offersList={offersList}
+                pageType={AppRoute.Main}
+                onListCardHover={onListCardHover}
+              />
 
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+
+              <Map city={CITYCENTER} points={getPointsForCity(CITYCENTER.name, offersList)} selectedPoint={selectedPoint}/>
             </div>
           </div>
         </div>

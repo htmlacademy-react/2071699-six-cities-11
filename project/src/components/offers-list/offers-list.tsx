@@ -1,17 +1,13 @@
-import {useState} from 'react';
 import CardScreen from '../../components/card/card';
 import {OfferType} from '../../types/offers';
 
 type OffersListProps = {
   offersList: OfferType[];
   pageType: string;
+  onListCardHover: (cardId: number) => void;
 }
 
-function OffersList({offersList, pageType}: OffersListProps): JSX.Element {
-  const [cardData, setCardData] = useState({
-    cardId: -1,
-    isActive: false,
-  });
+function OffersList({offersList, pageType, onListCardHover}: OffersListProps): JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -21,9 +17,7 @@ function OffersList({offersList, pageType}: OffersListProps): JSX.Element {
             key={offer.id}
             card={offer}
             pageType={pageType}
-            onChangeCard={(id: number, sign: boolean) => {setCardData({...cardData, cardId: id, isActive: sign});
-              // eslint-disable-next-line no-console
-              console.log(cardData);}}
+            onChangeCard={onListCardHover}
           />
         )
       )}
