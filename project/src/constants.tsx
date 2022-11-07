@@ -24,11 +24,14 @@ export const IMG_MARKER_DEFAULT = 'img/pin.svg';
 
 export const IMG_MARKER_CURRENT = 'img/pin-active.svg';
 
-export const CITYCENTER: CityType = {
+export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+export const DEFAULT_CITY: CityType = {
   location: {
-    latitude: 52.3740300,
-    longitude:4.8896900,
+    latitude: 48.8534100,
+    longitude: 2.3488000,
     zoom: 10
   },
-  name: 'Amsterdam'
+  name: 'Paris'
 };
+

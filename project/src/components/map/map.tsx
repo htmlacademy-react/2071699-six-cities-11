@@ -46,6 +46,14 @@ function Map({city, points, selectedPoint}: MapProps): JSX.Element {
     }
   }, [map, points, selectedPoint]);
 
+  useEffect(() => {
+    if (map) {
+      map.setView({
+        lat: city.location.latitude,
+        lng: city.location.longitude
+      },
+      city.location.zoom);}}, [map, city]);
+
   return <section className="cities__map" ref={mapRef}></section>;
 }
 

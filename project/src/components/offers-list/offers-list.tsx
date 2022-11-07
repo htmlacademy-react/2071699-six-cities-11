@@ -5,13 +5,14 @@ type OffersListProps = {
   offersList: OfferType[];
   pageType: string;
   onListCardHover: (cardId: number) => void;
+  cityName: string;
 }
 
-function OffersList({offersList, pageType, onListCardHover}: OffersListProps): JSX.Element {
+function OffersList({offersList, pageType, onListCardHover, cityName}: OffersListProps): JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {offersList.map((offer) =>
+      {offersList.filter((offer) => offer.city.name === cityName).map((offer) =>
         (
           <CardScreen
             key={offer.id}
