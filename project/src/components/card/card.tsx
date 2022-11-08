@@ -5,7 +5,7 @@ import {useState, useEffect} from 'react';
 
 type CardProps = {
   card: OfferType;
-  onChangeCard: (cardId: number) => void;
+  onChangeCard?: (cardId: number) => void;
   pageType: string;
 };
 
@@ -38,8 +38,8 @@ function CardScreen(props:CardProps): JSX.Element {
   return (
     <article
       className={`${settingPage.addClassName ? 'favorites__card' : 'cities__card'} place-card`}
-      onMouseEnter={() => {onChangeCard(card.id);}}
-      onMouseLeave={() => {onChangeCard(-1);}}
+      onMouseEnter={() => {onChangeCard?.(card.id);}}
+      onMouseLeave={() => {onChangeCard?.(-1);}}
     >
       {card.isPremium ?
         <div className="place-card__mark">

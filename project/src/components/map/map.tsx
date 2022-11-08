@@ -1,4 +1,5 @@
 import {useRef, useEffect} from 'react';
+import _ from 'lodash';
 import {Icon, Marker} from 'leaflet';
 import useMap from '../../hooks/use-map/use-map';
 import {LocationType, CityType} from '../../types/offers';
@@ -27,6 +28,7 @@ function Map({city, points, selectedPoint}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
+
   useEffect(() => {
     if (map) {
       points.forEach((point) => {
@@ -37,7 +39,7 @@ function Map({city, points, selectedPoint}: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.latitude === selectedPoint.latitude && point.longitude === selectedPoint.longitude
+            selectedPoint !== undefined && _.isEqual(point, selectedPoint)
               ? currentCustomIcon
               : defaultCustomIcon
           )

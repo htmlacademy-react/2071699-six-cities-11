@@ -90,7 +90,6 @@ function FavoritesPageOffer({offersFavorList}: OffersListProps): JSX.Element {
                         key={offer.id}
                         card={offer}
                         pageType={AppRoute.Favorites}
-                        onChangeCard={() => -1}
                       />))}
                 </div>
               </li>
