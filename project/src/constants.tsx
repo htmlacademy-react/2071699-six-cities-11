@@ -1,3 +1,5 @@
+import {CityType} from './types/offers';
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -17,3 +19,19 @@ export enum HouseTypes {
   House = 'house',
   Hotel = 'hotel'
 }
+
+export const IMG_MARKER_DEFAULT = 'img/pin.svg';
+
+export const IMG_MARKER_CURRENT = 'img/pin-active.svg';
+
+export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+export const DEFAULT_CITY: CityType = {
+  location: {
+    latitude: 48.8534100,
+    longitude: 2.3488000,
+    zoom: 10
+  },
+  name: 'Paris'
+};
+

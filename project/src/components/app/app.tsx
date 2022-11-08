@@ -10,19 +10,18 @@ import {OfferType} from '../../types/offers';
 import {CommentType} from '../../types/comments';
 
 type OffersProps = {
-  offersCount: number;
   offersList: OfferType[];
   commentsList: CommentType[];
 }
 
-function App({offersCount, offersList, commentsList}: OffersProps): JSX.Element {
+function App({offersList, commentsList}: OffersProps): JSX.Element {
   const offersFavotiteList: OfferType[] = offersList.filter((offer) => offer.isFavorite) ;
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainPage offersCount={offersCount} offersList={offersList} />}
+          element={<MainPage offersList={offersList} />}
         />
         <Route
           path={AppRoute.Login}

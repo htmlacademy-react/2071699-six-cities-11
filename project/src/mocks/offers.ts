@@ -8,11 +8,11 @@ export const offers: OfferType[] = [
     bedrooms: 2,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 48.8534100,
+        longitude: 2.3488000,
         zoom: 10
       },
-      name: 'Amsterdam'
+      name: 'Paris'
     },
     description: 'Description 1',
     goods: ['Wifi', 'Heating', 'Kitchen', 'Cable TV'],
@@ -31,6 +31,11 @@ export const offers: OfferType[] = [
     ],
     isFavorite: true,
     isPremium: true,
+    location: {
+      latitude: 48.8534100,
+      longitude: 2.3488000,
+      zoom: 8
+    },
     maxAdults: 4,
     previewImage: 'img/apartment-01.jpg',
     price: 1000,
@@ -47,7 +52,7 @@ export const offers: OfferType[] = [
         longitude: 4.895168,
         zoom: 10
       },
-      name: 'Hamburg'
+      name: 'Amsterdam'
     },
     description: 'Description 2',
     goods: ['Wifi', 'Cable TV'],
@@ -64,6 +69,11 @@ export const offers: OfferType[] = [
     ],
     isFavorite: false,
     isPremium: true,
+    location: {
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
+      zoom: 8
+    },
     maxAdults: 4,
     previewImage: 'img/apartment-02.jpg',
     price: 2000,
@@ -93,6 +103,11 @@ export const offers: OfferType[] = [
     images: ['img/apartment-03.jpg'],
     isFavorite: true,
     isPremium: false,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 8
+    },
     maxAdults: 4,
     previewImage: 'img/apartment-03.jpg',
     price: 3000,
@@ -109,7 +124,7 @@ export const offers: OfferType[] = [
         longitude: 4.895168,
         zoom: 10
       },
-      name: 'Paris'
+      name: 'Amsterdam'
     },
     description: 'Description 4',
     goods: ['Wifi'],
@@ -122,6 +137,11 @@ export const offers: OfferType[] = [
     images: ['img/studio-photos.jpg'],
     isFavorite: true,
     isPremium: true,
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 8
+    },
     maxAdults: 1,
     previewImage: 'img/studio-photos.jpg',
     price: 3000,
