@@ -11,3 +11,8 @@ export type CommentType = {
   rating: number;
   user: UserCommentType;
 }
+
+export type CommentsOffersType = {
+  hotelId: number;
+  commentsByOffer: CommentType[];
+}
