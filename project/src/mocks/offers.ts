@@ -148,5 +148,39 @@ export const offers: OfferType[] = [
     rating: 2,
     title: 'Title 4',
     typeOffer: HouseTypes.Hotel,
+  },
+  {
+    id: 5,
+    bedrooms: 1,
+    city: {
+      location: {
+        latitude: 52.370216,
+        longitude: 4.895168,
+        zoom: 10
+      },
+      name: 'Amsterdam'
+    },
+    description: 'Description 5',
+    goods: ['Wifi'],
+    host: {
+      avatarUrl: 'http://placekitten.com/500/500',
+      id: 1,
+      isPro: false,
+      name: 'Kate',
+    },
+    images: ['img/studio-photos.jpg'],
+    isFavorite: true,
+    isPremium: true,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 8
+    },
+    maxAdults: 1,
+    previewImage: 'img/studio-photos.jpg',
+    price: 3000,
+    rating: 2,
+    title: 'Title 5',
+    typeOffer: HouseTypes.Hotel,
   }
 ];

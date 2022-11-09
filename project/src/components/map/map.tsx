@@ -2,14 +2,15 @@ import {useRef, useEffect} from 'react';
 import _ from 'lodash';
 import {Icon, Marker} from 'leaflet';
 import useMap from '../../hooks/use-map/use-map';
-import {LocationType, CityType} from '../../types/offers';
+import {OfferType, LocationType, CityType} from '../../types/offers';
 import {IMG_MARKER_DEFAULT, IMG_MARKER_CURRENT} from '../../constants';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
   city: CityType;
-  points: LocationType[];
-  selectedPoint: LocationType | undefined;
+  offers: OfferType[];
+  selectedPoint?: LocationType | undefined;
+  classNameMap: string;
 };
 
 const defaultCustomIcon = new Icon({
@@ -24,9 +25,11 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({city, points, selectedPoint}: MapProps): JSX.Element {
+function Map({city, offers, selectedPoint, classNameMap}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+
+  const points: LocationType[] = offers.filter((offer) => offer.city.name === city.name).map((el)=> el.location);
 
 
   useEffect(() => {
@@ -56,7 +59,7 @@ function Map({city, points, selectedPoint}: MapProps): JSX.Element {
       },
       city.location.zoom);}}, [map, city]);
 
-  return <section className="cities__map" ref={mapRef}></section>;
+  return <section className={`${classNameMap}__map`} ref={mapRef}></section>;
 }
 
 export default Map;

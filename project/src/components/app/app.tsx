@@ -7,17 +7,19 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PropertyPage from '../../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import {OfferType} from '../../types/offers';
-import {CommentType} from '../../types/comments';
+import {CommentsOffersType} from '../../types/comments';
+import ScrollToTop from '../scroll-to-up/scroll-to-up';
 
 type OffersProps = {
   offersList: OfferType[];
-  commentsList: CommentType[];
+  commentsList: CommentsOffersType[];
 }
 
 function App({offersList, commentsList}: OffersProps): JSX.Element {
   const offersFavotiteList: OfferType[] = offersList.filter((offer) => offer.isFavorite) ;
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route
           path={AppRoute.Main}

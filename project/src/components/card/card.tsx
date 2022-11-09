@@ -23,7 +23,7 @@ function CardScreen(props:CardProps): JSX.Element {
         setSettingPage({
           widthImg: '260',
           heightImg: '200',
-          addClassName: ''
+          addClassName: 'cities'
         });
         break;
       case AppRoute.Favorites:
@@ -33,11 +33,18 @@ function CardScreen(props:CardProps): JSX.Element {
           addClassName: 'favorites'
         });
         break;
+      case AppRoute.Property:
+        setSettingPage({
+          widthImg: '260',
+          heightImg: '200',
+          addClassName: 'near-places'
+        });
+        break;
     }}, [pageType]);
 
   return (
     <article
-      className={`${settingPage.addClassName ? 'favorites__card' : 'cities__card'} place-card`}
+      className={`${settingPage.addClassName}__card place-card`}
       onMouseEnter={() => {onChangeCard?.(card.id);}}
       onMouseLeave={() => {onChangeCard?.(-1);}}
     >
@@ -46,13 +53,13 @@ function CardScreen(props:CardProps): JSX.Element {
           <span>Premium</span>
         </div> : '' }
       <div
-        className={`${settingPage.addClassName ? 'favorites__image-wrapper' : 'cities__image-wrapper'} place-card__image-wrapper`}
+        className={`${settingPage.addClassName}__image-wrapper place-card__image-wrapper`}
       >
         <a href="/">
           <img className="place-card__image" src={card.previewImage} width={settingPage.widthImg} height={settingPage.heightImg} alt="Place" />
         </a>
       </div>
-      <div className={`${settingPage.addClassName ? 'favorites__card-info ' : ''} place-card__info`}>
+      <div className={`${settingPage.addClassName === 'favorites' ? 'favorites__card-info ' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{card.price}</b>
@@ -62,7 +69,9 @@ function CardScreen(props:CardProps): JSX.Element {
             <svg className="place-card__bookmark-icon " width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">
+              {`${settingPage.addClassName === 'near-places' ? 'In' : 'To'} bookmarks`}
+            </span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -72,7 +81,7 @@ function CardScreen(props:CardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Property}/${card.id}`} style={{padding: 20}}>{card.title}</Link>
+          <Link to={`${AppRoute.Property}/${card.id}`}>{card.title}</Link>
         </h2>
         <p className="place-card__type">{card.typeOffer}</p>
       </div>
