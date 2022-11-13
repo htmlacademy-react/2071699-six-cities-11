@@ -8,7 +8,7 @@ import PropertyPage from '../../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import {OfferType} from '../../types/offers';
 import {CommentsOffersType} from '../../types/comments';
-import ScrollToTop from '../scroll-to-up/scroll-to-up';
+import ScrollToTop from '../../hooks/scroll-to-up/scroll-to-up';
 
 type OffersProps = {
   offersList: OfferType[];
