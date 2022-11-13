@@ -6,13 +6,12 @@ type commentsProps = {
 }
 
 function ReviewsList ({comments}: commentsProps) : JSX.Element {
-
   return (
-
     <ul className="reviews__list">
-      {comments.map((comment) => <ReviewsItem key={comment.id} comment={comment} />)};
-    </ul>
+      {comments &&
+        comments.map((comment) => <ReviewsItem key={comment.id} comment={comment} />)};
 
+    </ul>
   );
 
 }
