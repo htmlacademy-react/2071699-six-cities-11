@@ -7,6 +7,7 @@ import OfferNearbyList from '../../components/offers-nearby-list/offers-nearby-l
 import Map from '../../components/map/map';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../constants';
+import UseScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
 
 type PropertyPageProps = {
   offersList: OfferType[];
@@ -14,6 +15,7 @@ type PropertyPageProps = {
 }
 
 function PropertyPage ({offersList, commentsList}: PropertyPageProps): JSX.Element {
+  UseScrollToTop();
   const params = useParams();
   const offer = offersList.find((el) => el.id.toString() === params.id) as OfferType;
   const {id, images, isPremium, title, rating, typeOffer, bedrooms, maxAdults, price, goods, host, description} = offer;
