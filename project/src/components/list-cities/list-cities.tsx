@@ -1,14 +1,18 @@
 import {MouseEvent} from 'react';
+import {useAppDispatch} from '../../hooks';
+import {changeCity} from '../../store/action';
+import {OfferType} from '../../types/offers';
 
-type CityProps = {
-  cityName: string | undefined;
-  onListItemHover: (listItemName: string) => void;
-};
+type OffersProps = {
+  cityName: string;
+  offersList: OfferType[];
+}
 
-function ListCities({cityName, onListItemHover}: CityProps): JSX.Element {
+function ListCities({cityName, offersList}: OffersProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const listItemHoverHandler = (event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
     event.preventDefault();
-    onListItemHover(event.currentTarget.innerText);
+    dispatch(changeCity(event.currentTarget.innerText, offersList));
   };
   return (
     <li className="locations__item">

@@ -2,19 +2,23 @@ import {OfferType} from '../../types/offers';
 import {AppRoute} from '../../constants';
 import {Link} from 'react-router-dom';
 import {useState, useEffect} from 'react';
-
+import {getCurrentPoint} from '../../store/action';
+import {useAppDispatch} from '../../hooks';
+import { generatePath } from 'react-router';
 type CardProps = {
   card: OfferType;
-  onChangeCard?: (cardId: number) => void;
+
   pageType: string;
 };
 
 function CardScreen(props:CardProps): JSX.Element {
-  const {card, onChangeCard, pageType} = props;
+  const {card, pageType} = props;
+  const dispatch = useAppDispatch();
+
   const [settingPage, setSettingPage] = useState({
     widthImg: '260',
     heightImg: '200',
-    addClassName: ''
+    className: ''
   });
 
   useEffect(() => {
@@ -23,43 +27,43 @@ function CardScreen(props:CardProps): JSX.Element {
         setSettingPage({
           widthImg: '260',
           heightImg: '200',
-          addClassName: 'cities'
+          className: 'cities'
         });
         break;
       case AppRoute.Favorites:
         setSettingPage({
           widthImg: '150',
           heightImg: '110',
-          addClassName: 'favorites'
+          className: 'favorites'
         });
         break;
       case AppRoute.Property:
         setSettingPage({
           widthImg: '260',
           heightImg: '200',
-          addClassName: 'near-places'
+          className: 'near-places'
         });
         break;
     }}, [pageType]);
 
   return (
     <article
-      className={`${settingPage.addClassName}__card place-card`}
-      onMouseEnter={() => {onChangeCard?.(card.id);}}
-      onMouseLeave={() => {onChangeCard?.(-1);}}
+      className={`${settingPage.className}__card place-card`}
+      onMouseEnter={() => dispatch(getCurrentPoint(card, true))}
+      onMouseLeave={() => dispatch(getCurrentPoint(card, false))}
     >
       {card.isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
         </div> : '' }
       <div
-        className={`${settingPage.addClassName}__image-wrapper place-card__image-wrapper`}
+        className={`${settingPage.className}__image-wrapper place-card__image-wrapper`}
       >
         <a href="/">
           <img className="place-card__image" src={card.previewImage} width={settingPage.widthImg} height={settingPage.heightImg} alt="Place" />
         </a>
       </div>
-      <div className={`${settingPage.addClassName === 'favorites' ? 'favorites__card-info ' : ''} place-card__info`}>
+      <div className={`${settingPage.className === 'favorites' ? 'favorites__card-info ' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{card.price}</b>
@@ -70,7 +74,7 @@ function CardScreen(props:CardProps): JSX.Element {
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">
-              {`${settingPage.addClassName === 'near-places' ? 'In' : 'To'} bookmarks`}
+              {`${settingPage.className === 'near-places' ? 'In' : 'To'} bookmarks`}
             </span>
           </button>
         </div>
@@ -81,7 +85,7 @@ function CardScreen(props:CardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Property}/${card.id}`}>{card.title}</Link>
+          <Link to={generatePath(`${AppRoute.Property}/:id`, { id: card.id.toString()})}>{card.title}</Link>
         </h2>
         <p className="place-card__type">{card.typeOffer}</p>
       </div>

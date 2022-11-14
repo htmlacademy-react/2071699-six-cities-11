@@ -18,6 +18,7 @@ function PropertyPage ({offersList, commentsList}: PropertyPageProps): JSX.Eleme
   const offer = offersList.find((el) => el.id.toString() === params.id) as OfferType;
   const {id, images, isPremium, title, rating, typeOffer, bedrooms, maxAdults, price, goods, host, description} = offer;
   const commentsByOffer = commentsList.find((el) => el.hotelId === id)?.commentsByOffer as CommentType[] ;
+  const countComments = commentsByOffer ? commentsByOffer.length : 0;
 
   const OffersNearby = offersList.filter((el) => el.id.toString() !== params.id);
 
@@ -132,6 +133,7 @@ function PropertyPage ({offersList, commentsList}: PropertyPageProps): JSX.Eleme
                 </div>
               </div>
               <section className="property__reviews reviews">
+                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{countComments}</span></h2>
                 <ReviewsList comments={commentsByOffer}/>
 
                 <CommentForm/>

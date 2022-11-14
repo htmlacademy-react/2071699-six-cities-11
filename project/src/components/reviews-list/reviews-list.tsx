@@ -6,17 +6,12 @@ type commentsProps = {
 }
 
 function ReviewsList ({comments}: commentsProps) : JSX.Element {
-  const countComments = comments ? comments.length : 0;
   return (
-    <>
-      <h2 className="reviews__title">Reviews · <span className="reviews__amount">{countComments}</span></h2>
-      {countComments !== 0
-        ?
-        <ul className="reviews__list">
-          {comments.map((comment) => <ReviewsItem key={comment.id} comment={comment} />)};
-        </ul>
-        : ''}
-    </>
+    <ul className="reviews__list">
+      {comments &&
+        comments.map((comment) => <ReviewsItem key={comment.id} comment={comment} />)};
+
+    </ul>
   );
 
 }

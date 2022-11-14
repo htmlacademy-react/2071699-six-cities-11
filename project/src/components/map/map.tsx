@@ -9,7 +9,7 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   city: CityType;
   offers: OfferType[];
-  selectedPoint?: LocationType | undefined;
+  selectedPoint?: LocationType | null;
   classNameMap: string;
 };
 
@@ -29,8 +29,7 @@ function Map({city, offers, selectedPoint, classNameMap}: MapProps): JSX.Element
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
-  const points: LocationType[] = offers.filter((offer) => offer.city.name === city.name).map((el)=> el.location);
-
+  const points: LocationType[] = offers.map((el)=> el.location);
 
   useEffect(() => {
     if (map) {

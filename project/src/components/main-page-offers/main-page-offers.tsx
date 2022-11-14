@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {OfferType, CityType, LocationType} from '../../types/offers';
+import {useAppSelector} from '../../hooks';
+import {OfferType, CityType} from '../../types/offers';
 import {AppRoute} from '../../constants';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map/map';
@@ -11,18 +11,17 @@ type OffersPropsAll = {
 }
 
 function MainPageWithOffers({offersCount, offersList, selectedCity}: OffersPropsAll): JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState<LocationType | undefined>(
-    undefined
-  );
-  const onListCardHover = (id: number) => {
-    const currentPoint = offersList.find((offer) => offer.id === id)?.location;
-    setSelectedPoint(currentPoint);
-  };
+
+  const currentCity = useAppSelector((state) => state.selectedCity);
+  const offersForCity = useAppSelector((state) => state.offers);
+  const selectedPoint = useAppSelector((state) => state.selectedPoint);
+
+
   return (
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">{offersCount}  places to stay in {selectedCity.name}</b>
+        <b className="places__found">{offersCount}  places to stay in {currentCity.name}</b>
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption">Sort by</span>
           <span className="places__sorting-type" tabIndex={0}>
@@ -40,15 +39,13 @@ function MainPageWithOffers({offersCount, offersList, selectedCity}: OffersProps
         </form>
 
         <OffersList
-          offersList={offersList}
+          offersList={offersForCity}
           pageType={AppRoute.Main}
-          onListCardHover={onListCardHover}
-          cityName={selectedCity.name}
         />
       </section>
       <div className="cities__right-section">
 
-        <Map city={selectedCity} offers={offersList} selectedPoint={selectedPoint} classNameMap={'cities'}/>
+        <Map city={selectedCity} offers={offersForCity} selectedPoint={selectedPoint} classNameMap={'cities'}/>
       </div>
     </div>
 
