@@ -1,8 +1,8 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {changeCity, getCurrentPoint, sortOffersPriceLow, sortOffersPriceHigh, sortOffersPopular, sortOffersRating, sortMenuView} from './action';
+import _ from 'lodash';
 import {offers} from '../mocks/offers';
 import {OfferType, CityType, LocationType} from '../types/offers';
-import {sortPriceHigh, sortPriceLow, sortRating} from '../utils';
 import {SortTypes} from '../constants';
 
 
@@ -47,11 +47,11 @@ const reducer = createReducer(initialState, (builder) => {
       state.selectedPoint = action.payload || null;
     })
     .addCase(sortOffersPriceLow, (state) => {
-      state.offers = state.offers.sort(sortPriceLow);
+      state.offers = _.sortBy(state.offers, 'price').reverse();
       state.sortType = SortTypes.PriceLow;
     })
     .addCase(sortOffersPriceHigh, (state) => {
-      state.offers = state.offers.sort(sortPriceHigh);
+      state.offers = _.sortBy(state.offers, 'price');
       state.sortType = SortTypes.PriceHigh;
     })
     .addCase(sortOffersPopular, (state) => {
@@ -59,7 +59,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.sortType = SortTypes.Popular;
     })
     .addCase(sortOffersRating, (state) => {
-      state.offers = state.offers.sort(sortRating);
+      state.offers = _.sortBy(state.offers, 'rating');
       state.sortType = SortTypes.Rating;
     })
     .addCase(sortMenuView, (state) => {
