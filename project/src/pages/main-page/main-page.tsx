@@ -5,12 +5,14 @@ import HeaderMainPage from '../../components/main-page-header/main-page-header';
 import MainPageEmpty from '../../components/main-page-empty/main-page-empty';
 import MainPageWithOffers from '../../components/main-page-offers/main-page-offers';
 import ListCities from '../../components/list-cities/list-cities';
+import UseScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
 
 type OffersProps = {
   offersList: OfferType[];
 }
 
 function MainPage({offersList}: OffersProps): JSX.Element {
+  UseScrollToTop();
   const selectedCity = useAppSelector((state) => state.selectedCity);
 
   const offersForCurrentCity = offersList.filter((offer) => offer.city.name === selectedCity.name);
@@ -32,7 +34,6 @@ function MainPage({offersList}: OffersProps): JSX.Element {
             ?
             <MainPageWithOffers
               offersCount={offersCountForCity}
-              offersList={offersList}
               selectedCity={selectedCity}
             />
             : <MainPageEmpty /> }

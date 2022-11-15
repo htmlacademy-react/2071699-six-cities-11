@@ -8,7 +8,6 @@ import PropertyPage from '../../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import {OfferType} from '../../types/offers';
 import {CommentsOffersType} from '../../types/comments';
-import UseScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
 
 
 type OffersProps = {
@@ -18,10 +17,9 @@ type OffersProps = {
 
 function App({offersList, commentsList}: OffersProps): JSX.Element {
   const offersFavotiteList: OfferType[] = offersList.filter((offer) => offer.isFavorite) ;
-  const ScrollToTop = <UseScrollToTop />;
+
   return (
     <BrowserRouter>
-      {ScrollToTop}
       <Routes>
         <Route
           path={AppRoute.Main}

@@ -1,5 +1,3 @@
-import {CityType} from './types/offers';
-
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -26,12 +24,11 @@ export const IMG_MARKER_CURRENT = 'img/pin-active.svg';
 
 export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-export const DEFAULT_CITY: CityType = {
-  location: {
-    latitude: 48.8534100,
-    longitude: 2.3488000,
-    zoom: 10
-  },
-  name: 'Paris'
-};
+export enum SortTypes {
+  Popular = 'Popular',
+  PriceHigh = 'Price: low to high',
+  PriceLow = 'Price: high to low',
+  Rating = 'Top rated first'
+}
 
+export const SortTypesArray = [SortTypes.Popular, SortTypes.PriceHigh, SortTypes.PriceLow, SortTypes.Rating];
