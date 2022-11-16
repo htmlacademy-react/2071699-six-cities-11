@@ -18,6 +18,12 @@ export const getCurrentPoint = createAction('point/getCurrentPoint',
     payload: isAction ? value?.location : null,
   }));
 
+export const getFavoriteOffers = createAction('offers/getFavoriteOffers',
+  (value: OfferType []) => ({
+    payload: value,
+  }));
+
+
 export const sortOffersPriceLow = createAction('sort/sortOffersPriceLow');
 export const sortOffersPriceHigh = createAction('sort/sortOffersPriceHigh');
 export const sortOffersPopular = createAction('sort/sortOffersPopular');
@@ -25,3 +31,7 @@ export const sortOffersRating = createAction('sort/sortOffersRating');
 
 export const sortMenuView = createAction('sort/sortMenuView');
 
+export const loadOffers = createAction<OfferType[]>('data/loadOffers');
+export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
+
+export const setError = createAction<string | null>('offer/setError');

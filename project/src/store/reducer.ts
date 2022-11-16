@@ -1,50 +1,61 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCity, getCurrentPoint, sortOffersPriceLow, sortOffersPriceHigh, sortOffersPopular, sortOffersRating, sortMenuView} from './action';
+import {
+  changeCity,
+  getCurrentPoint,
+  getFavoriteOffers,
+  sortOffersPriceLow,
+  sortOffersPriceHigh,
+  sortOffersPopular,
+  sortOffersRating,
+  sortMenuView,
+  loadOffers,
+  setOffersDataLoadingStatus,
+  setError
+} from './action';
 import _ from 'lodash';
-import {offers} from '../mocks/offers';
-import {OfferType, CityType, LocationType} from '../types/offers';
+import {OfferType, LocationType} from '../types/offers';
 import {SortTypes} from '../constants';
 
 
 const initialState : {
-  selectedCity: CityType;
+  selectedCityName: string;
   offers: OfferType[];
   selectedPoint: LocationType | null;
   sortType: string;
   sortView: string;
   offersNotSort: OfferType[];
+  offersFavotiteList: OfferType[];
+  allOffers: OfferType[];
+  error: string | null;
+  isOffersDataLoading: boolean;
 } = {
-  selectedCity: offers[0].city ,
-  offers: [offers[0]],
+  selectedCityName: 'Paris',
+  offers: [],
   selectedPoint: null,
   sortType: SortTypes.Popular,
   sortView: 'closed',
-  offersNotSort: [offers[0]],
+  offersNotSort: [],
+  offersFavotiteList: [],
+  allOffers: [],
+  error: null,
+  isOffersDataLoading: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCity, (state, action) => {
-      const currentcity = action.payload.city;
-      const offersForCity = action.payload.offersForCity;
-      state.selectedCity = offersForCity[0]?.city
-        || { //Это временно!!!
-          location: {
-            latitude: 0,
-            longitude: 0,
-            zoom: 10
-          },
-          name: currentcity
-        }; //Если для выбранного города нет предложений то в переменную записываем город с нулевыми координатами, т.к. в массиве данных города нет,
-
-      state.offers = offersForCity;
-      state.offersNotSort = offersForCity;
+      state.selectedCityName = action.payload.city;
+      state.offers = action.payload.offersForCity;
+      state.offersNotSort = action.payload.offersForCity;
       state.sortType = SortTypes.Popular;
       state.sortView = 'closed';
     })
 
     .addCase(getCurrentPoint, (state, action) => {
       state.selectedPoint = action.payload || null;
+    })
+    .addCase(getFavoriteOffers, (state, action) => {
+      state.offersFavotiteList = action.payload.filter((offer) => offer.isFavorite);
     })
     .addCase(sortOffersPriceLow, (state) => {
       state.offers = _.sortBy(state.offers, 'price').reverse();
@@ -64,6 +75,16 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(sortMenuView, (state) => {
       state.sortView = state.sortView === 'closed' ? 'opened' : 'closed';
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.allOffers = action.payload;
+      state.offers = action.payload.filter((el) => el.city.name === initialState.selectedCityName);
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
+    })
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     });
 });
 

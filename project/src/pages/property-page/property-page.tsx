@@ -8,21 +8,22 @@ import Map from '../../components/map/map';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../constants';
 import UseScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
+import {useAppSelector} from '../../hooks';
 
 type PropertyPageProps = {
-  offersList: OfferType[];
   commentsList: CommentsOffersType[];
 }
 
-function PropertyPage ({offersList, commentsList}: PropertyPageProps): JSX.Element {
+function PropertyPage ({commentsList}: PropertyPageProps): JSX.Element {
   UseScrollToTop();
   const params = useParams();
-  const offer = offersList.find((el) => el.id.toString() === params.id) as OfferType;
+  const offersForCity = useAppSelector((state) => state.offers);
+  const offer = offersForCity.find((el) => el.id.toString() === params.id) as OfferType;
   const {id, images, isPremium, title, rating, typeOffer, bedrooms, maxAdults, price, goods, host, description} = offer;
   const commentsByOffer = commentsList.find((el) => el.hotelId === id)?.commentsByOffer as CommentType[] ;
   const countComments = commentsByOffer ? commentsByOffer.length : 0;
 
-  const OffersNearby = offersList.filter((el) => el.id.toString() !== params.id);
+  const OffersNearby = offersForCity.filter((el) => el.id.toString() !== params.id);
 
   return (
     <div className="page">
@@ -144,7 +145,7 @@ function PropertyPage ({offersList, commentsList}: PropertyPageProps): JSX.Eleme
             </div>
           </div>
           <section className="property__map">
-            <Map city={offer.city} offers={offersList} classNameMap={'property'}/>
+            <Map city={offer.city} offers={offersForCity} classNameMap={'property'}/>
           </section>
         </section>
         <div className="container">
