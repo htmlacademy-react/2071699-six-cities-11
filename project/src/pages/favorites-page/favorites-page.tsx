@@ -3,6 +3,7 @@ import {OfferType} from '../../types/offers';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../constants';
 import UseScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
+import {useAppSelector} from '../../hooks';
 
 type OffersListProps = {
   offersFavorList: OfferType[];
@@ -10,7 +11,6 @@ type OffersListProps = {
 
 
 function HeaderFavoritesPage(): JSX.Element {
-  UseScrollToTop();
   return (
     <header className="header">
       <div className="container">
@@ -103,7 +103,9 @@ function FavoritesPageOffer({offersFavorList}: OffersListProps): JSX.Element {
     </main>
   );
 }
-function FavoritesPage({offersFavorList}: OffersListProps): JSX.Element {
+function FavoritesPage(): JSX.Element {
+  UseScrollToTop();
+  const offersFavorList = useAppSelector((state) => state.offersFavotiteList);
   return (
     <div className="page">
       <HeaderFavoritesPage />
