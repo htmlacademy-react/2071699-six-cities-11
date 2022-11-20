@@ -2,7 +2,7 @@ import CardScreen from '../../components/card/card';
 import {OfferType} from '../../types/offers';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../constants';
-import UseScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
+import useScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
 import {useAppSelector} from '../../hooks';
 
 type OffersListProps = {
@@ -104,7 +104,7 @@ function FavoritesPageOffer({offersFavorList}: OffersListProps): JSX.Element {
   );
 }
 function FavoritesPage(): JSX.Element {
-  UseScrollToTop();
+  useScrollToTop();
   const offersFavorList = useAppSelector((state) => state.offersFavotiteList);
   return (
     <div className="page">

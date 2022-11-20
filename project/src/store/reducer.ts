@@ -10,11 +10,14 @@ import {
   sortMenuView,
   loadOffers,
   setOffersDataLoadingStatus,
-  setError
+  setError,
+  requireAuthorization,
+  loadAuthInfo,
 } from './action';
 import _ from 'lodash';
 import {OfferType, LocationType} from '../types/offers';
-import {SortTypes} from '../constants';
+import {UserData} from '../types/user-data';
+import {SortTypes, AuthorizationStatus} from '../constants';
 
 
 const initialState : {
@@ -28,6 +31,8 @@ const initialState : {
   allOffers: OfferType[];
   error: string | null;
   isOffersDataLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
+  authInfo: UserData | null;
 } = {
   selectedCityName: 'Paris',
   offers: [],
@@ -39,6 +44,8 @@ const initialState : {
   allOffers: [],
   error: null,
   isOffersDataLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  authInfo: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -85,6 +92,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(loadAuthInfo, (state, action) => {
+      state.authInfo = action.payload;
     });
 });
 
