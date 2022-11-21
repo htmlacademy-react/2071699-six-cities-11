@@ -11,7 +11,7 @@ import {
   loadOffers,
   setOffersDataLoadingStatus,
   setError,
-  requireAuthorization,
+  getStatusAuthorization,
   loadAuthInfo,
 } from './action';
 import _ from 'lodash';
@@ -93,7 +93,7 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
     })
-    .addCase(requireAuthorization, (state, action) => {
+    .addCase(getStatusAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
     .addCase(loadAuthInfo, (state, action) => {

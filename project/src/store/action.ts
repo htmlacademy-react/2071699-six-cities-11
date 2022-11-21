@@ -39,7 +39,7 @@ export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersD
 
 export const setError = createAction<string | null>('offer/setError');
 
-export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+export const getStatusAuthorization = createAction<AuthorizationStatus>('user/getStatusAuthorization');
 export const loadAuthInfo = createAction<UserData>('user/loadAuthInfo');
 
 export const redirectToRoute = createAction<AppRoute>('page/redirectToRoute');
