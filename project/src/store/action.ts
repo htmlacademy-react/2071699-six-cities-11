@@ -1,5 +1,8 @@
 import {createAction} from '@reduxjs/toolkit';
 import {OfferType} from '../types/offers';
+import {UserData} from '../types/user-data';
+import {AppRoute, AuthorizationStatus} from '../constants';
+
 
 export const changeCity = createAction('city/changeCity',
   (value: string, offersArray: OfferType[]) => {
@@ -35,3 +38,8 @@ export const loadOffers = createAction<OfferType[]>('data/loadOffers');
 export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
 
 export const setError = createAction<string | null>('offer/setError');
+
+export const getStatusAuthorization = createAction<AuthorizationStatus>('user/getStatusAuthorization');
+export const loadAuthInfo = createAction<UserData>('user/loadAuthInfo');
+
+export const redirectToRoute = createAction<AppRoute>('page/redirectToRoute');

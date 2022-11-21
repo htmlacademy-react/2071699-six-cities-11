@@ -4,12 +4,12 @@ import HeaderMainPage from '../../components/main-page-header/main-page-header';
 import MainPageEmpty from '../../components/main-page-empty/main-page-empty';
 import MainPageWithOffers from '../../components/main-page-offers/main-page-offers';
 import ListCities from '../../components/list-cities/list-cities';
-import UseScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
+import useScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
 import {OfferType} from '../../types/offers';
 
 
 function MainPage(): JSX.Element {
-  UseScrollToTop();
+  useScrollToTop();
   const selectedCityName = useAppSelector((state) => state.selectedCityName);
   const offersList: OfferType[] = useAppSelector((state) => state.allOffers);
 

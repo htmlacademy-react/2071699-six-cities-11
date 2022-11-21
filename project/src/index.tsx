@@ -6,7 +6,10 @@ import ErrorMessage from './components/error-message/error-message';
 import {comments} from './mocks/comments';
 import {store} from './store';
 import {fetchOffersAction} from './store/api-actions';
+import {checkAuthAction} from './store/api-actions';
 
+
+store.dispatch(checkAuthAction());
 store.dispatch(fetchOffersAction());
 
 const root = ReactDOM.createRoot(
@@ -17,10 +20,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <ErrorMessage />
       <App
         commentsList = {comments}
       />
+      <ErrorMessage />
     </Provider>
   </React.StrictMode>,
 );
