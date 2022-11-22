@@ -4,7 +4,10 @@ import {Link} from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import {getCurrentPoint} from '../../store/action';
 import {useAppDispatch} from '../../hooks';
-import { generatePath } from 'react-router';
+import {generatePath } from 'react-router';
+import {store} from '../../store';
+import {fetchCommentsAction} from '../../store/api-actions';
+
 type CardProps = {
   card: OfferType;
 
@@ -46,6 +49,11 @@ function CardScreen(props:CardProps): JSX.Element {
         break;
     }}, [pageType]);
 
+  const getCommentForOffer = () => {
+    store.dispatch(fetchCommentsAction(card.id.toString()));
+    dispatch(getCurrentPoint(card, false));
+  };
+
   return (
     <article
       className={`${settingPage.className}__card place-card`}
@@ -85,7 +93,7 @@ function CardScreen(props:CardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={generatePath(`${AppRoute.Property}/:id`, { id: card.id.toString()})}>{card.title}</Link>
+          <Link to={generatePath(`${AppRoute.Property}/:id`, { id: card.id.toString()})} onClick={getCommentForOffer}>{card.title}</Link>
         </h2>
         <p className="place-card__type">{card.typeOffer}</p>
       </div>

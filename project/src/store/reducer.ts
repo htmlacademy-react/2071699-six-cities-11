@@ -11,11 +11,14 @@ import {
   loadOffers,
   setOffersDataLoadingStatus,
   setError,
-  getStatusAuthorization,
+  setStatusAuthorization,
   loadAuthInfo,
+  loadComments,
+  sendComment,
 } from './action';
 import _ from 'lodash';
 import {OfferType, LocationType} from '../types/offers';
+import {CommentType} from '../types/comments';
 import {UserData} from '../types/user-data';
 import {SortTypes, AuthorizationStatus} from '../constants';
 
@@ -33,6 +36,8 @@ const initialState : {
   isOffersDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   authInfo: UserData | null;
+  comments: CommentType[];
+  userComment: CommentType | null;
 } = {
   selectedCityName: 'Paris',
   offers: [],
@@ -46,6 +51,8 @@ const initialState : {
   isOffersDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   authInfo: null,
+  comments: [],
+  userComment: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -93,11 +100,17 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
     })
-    .addCase(getStatusAuthorization, (state, action) => {
+    .addCase(setStatusAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
     .addCase(loadAuthInfo, (state, action) => {
       state.authInfo = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(sendComment, (state, action) => {
+      state.userComment = action.payload;
     });
 });
 

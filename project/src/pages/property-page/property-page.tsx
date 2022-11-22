@@ -1,61 +1,29 @@
 import {OfferType} from '../../types/offers';
-import {CommentType, CommentsOffersType} from '../../types/comments';
 import {useParams} from 'react-router-dom';
 import CommentForm from '../../components/comment-form/comment-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import OfferNearbyList from '../../components/offers-nearby-list/offers-nearby-list';
 import Map from '../../components/map/map';
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../constants';
+import HeaderMainPage from '../../components/main-page-header/main-page-header';
+import {AppRoute, AuthorizationStatus} from '../../constants';
 import useScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
 import {useAppSelector} from '../../hooks';
 
 type PropertyPageProps = {
-  commentsList: CommentsOffersType[];
+  offer: OfferType;
+  offersForCity: OfferType[];
 }
 
-function PropertyPage ({commentsList}: PropertyPageProps): JSX.Element {
-  useScrollToTop();
-  const params = useParams();
-  const offersForCity = useAppSelector((state) => state.offers);
-  const offer = offersForCity.find((el) => el.id.toString() === params.id) as OfferType;
+
+function PropertyPageId ({offer, offersForCity}: PropertyPageProps): JSX.Element {
   const {id, images, isPremium, title, rating, typeOffer, bedrooms, maxAdults, price, goods, host, description} = offer;
-  const commentsByOffer = commentsList.find((el) => el.hotelId === id)?.commentsByOffer as CommentType[] ;
-  const countComments = commentsByOffer ? commentsByOffer.length : 0;
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  const OffersNearby = offersForCity.filter((el) => el.id.toString() !== params.id);
-
+  const OffersNearby = offersForCity.filter((el) => el.id !== id);
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link to={AppRoute.Main} className="header__logo-link" >
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="/">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="/">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <HeaderMainPage />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -136,10 +104,9 @@ function PropertyPage ({commentsList}: PropertyPageProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{countComments}</span></h2>
-                <ReviewsList comments={commentsByOffer}/>
+                <ReviewsList/>
 
-                <CommentForm/>
+                {authorizationStatus === AuthorizationStatus.Auth && <CommentForm hotelId={id}/>}
 
               </section>
             </div>
@@ -161,6 +128,22 @@ function PropertyPage ({commentsList}: PropertyPageProps): JSX.Element {
       </main>
     </div>
   );
+}
+
+
+function PropertyPage (): JSX.Element {
+  useScrollToTop();
+  const params = useParams();
+  const offersForCity = useAppSelector((state) => state.offers);
+  const offer = offersForCity.find((el) => el.id.toString() === params.id) as OfferType;
+  // eslint-disable-next-line no-console
+  console.log(offer);
+  if (offer) {
+    return ( <PropertyPageId offer ={offer} offersForCity={offersForCity} />);
+  } else {
+    return (<NotFoundScreen />);
+  }
+
 }
 
 export default PropertyPage;
