@@ -47,8 +47,15 @@ function LoginPage(): JSX.Element {
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password"
-                  id="password" placeholder="Password" required ref={passwordRef}
+                <input
+                  className="login__input form__input"
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  required
+                  ref={passwordRef}
+                  pattern="[A-Za-zА-Яа-яЁё]{1,}[0-9]{1,}"
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>

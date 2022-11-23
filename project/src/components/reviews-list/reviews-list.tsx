@@ -16,8 +16,9 @@ function ReviewsList () : JSX.Element {
     }
   }, [params.id]);
 
-  const commentsByOffer = useAppSelector((state) => state.comments);
-  const countComments = commentsByOffer ? commentsByOffer.length : 0;
+  const commentsByOfferAll = useAppSelector((state) => state.comments);
+  const commentsByOffer = useAppSelector((state) => state.comments).slice(0, 10);
+  const countComments = commentsByOfferAll ? commentsByOfferAll.length : 0;
 
 
   if (isCommentsLoading) {

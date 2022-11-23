@@ -10,7 +10,6 @@ import {
   sortMenuView,
   loadOffers,
   setOffersDataLoadingStatus,
-  setError,
   setStatusAuthorization,
   loadAuthInfo,
   loadComments,
@@ -33,7 +32,6 @@ const initialState : {
   offersNotSort: OfferType[];
   offersFavotiteList: OfferType[];
   allOffers: OfferType[];
-  error: string | null;
   isOffersDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   authInfo: UserData | null;
@@ -49,7 +47,6 @@ const initialState : {
   offersNotSort: [],
   offersFavotiteList: [],
   allOffers: [],
-  error: null,
   isOffersDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   authInfo: null,
@@ -97,9 +94,6 @@ const reducer = createReducer(initialState, (builder) => {
       state.allOffers = action.payload;
       state.offers = action.payload.filter((el) => el.city.name === initialState.selectedCityName);
     })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
-    })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
     })
@@ -110,7 +104,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.authInfo = action.payload;
     })
     .addCase(loadComments, (state, action) => {
-      state.comments = action.payload;
+      state.comments = _.sortBy(action.payload, 'date').reverse();
     })
     .addCase(sendComment, (state, action) => {
       state.userComment = action.payload;

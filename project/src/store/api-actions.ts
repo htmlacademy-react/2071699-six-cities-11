@@ -5,12 +5,11 @@ import {OfferType} from '../types/offers';
 import {CommentType, CommentSendType} from '../types/comments';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
-import {APIRoute, TIMEOUT_SHOW_ERROR, AuthorizationStatus, AppRoute} from '../constants';
+import {APIRoute, AuthorizationStatus, AppRoute} from '../constants';
 import {store} from '.';
 import {saveToken, dropToken} from '../services/token';
 import {
   loadOffers,
-  setError,
   setOffersDataLoadingStatus,
   setStatusAuthorization,
   redirectToRoute,
@@ -20,15 +19,6 @@ import {
   setCommentsLoadingStatus
 } from './action';
 
-export const clearErrorAction = createAsyncThunk(
-  'offer/clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;

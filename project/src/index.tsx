@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {Provider} from 'react-redux';
 import App from './components/app/app';
-import ErrorMessage from './components/error-message/error-message';
 import {store} from './store';
 import {fetchOffersAction} from './store/api-actions';
 import {checkAuthAction} from './store/api-actions';
-
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 store.dispatch(checkAuthAction());
 store.dispatch(fetchOffersAction());
@@ -21,7 +21,7 @@ root.render(
   <React.StrictMode>
     <Provider store = {store}>
       <App/>
-      <ErrorMessage />
+      <ToastContainer />
     </Provider>
   </React.StrictMode>,
 );

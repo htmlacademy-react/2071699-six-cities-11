@@ -39,5 +39,3 @@ export enum APIRoute {
   Logout = '/logout',
   Comments = '/comments',
 }
-
-export const TIMEOUT_SHOW_ERROR = 2000;

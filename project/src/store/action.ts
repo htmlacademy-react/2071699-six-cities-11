@@ -41,8 +41,6 @@ export const loadComments = createAction<CommentType[]>('data/loadComments');
 export const sendComment = createAction<CommentType>('data/sendComment');
 export const setCommentsLoadingStatus = createAction<boolean>('data/setCommentsLoadingStatus');
 
-export const setError = createAction<string | null>('offer/setError');
-
 export const setStatusAuthorization = createAction<AuthorizationStatus>('user/setStatusAuthorization');
 export const loadAuthInfo = createAction<UserData>('user/loadAuthInfo');
 
