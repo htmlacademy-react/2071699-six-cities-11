@@ -15,6 +15,7 @@ import {
   loadAuthInfo,
   loadComments,
   sendComment,
+  setCommentsLoadingStatus,
 } from './action';
 import _ from 'lodash';
 import {OfferType, LocationType} from '../types/offers';
@@ -38,6 +39,7 @@ const initialState : {
   authInfo: UserData | null;
   comments: CommentType[];
   userComment: CommentType | null;
+  isCommentsLoading: boolean;
 } = {
   selectedCityName: 'Paris',
   offers: [],
@@ -53,6 +55,7 @@ const initialState : {
   authInfo: null,
   comments: [],
   userComment: null,
+  isCommentsLoading: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -111,6 +114,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(sendComment, (state, action) => {
       state.userComment = action.payload;
+    })
+    .addCase(setCommentsLoadingStatus, (state, action) => {
+      state.isCommentsLoading = action.payload;
     });
 });
 

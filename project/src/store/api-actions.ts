@@ -17,7 +17,7 @@ import {
   loadAuthInfo,
   loadComments,
   sendComment,
-  redirectToRouteOffer
+  setCommentsLoadingStatus
 } from './action';
 
 export const clearErrorAction = createAsyncThunk(
@@ -97,9 +97,9 @@ export const fetchCommentsAction = createAsyncThunk<void, string, {
 }>(
   'data/fetchComments',
   async (id, {dispatch, extra: api}) => {
-    dispatch(setOffersDataLoadingStatus(true));
+    dispatch(setCommentsLoadingStatus(true));
     const {data} = await api.get<CommentType[]>(`${APIRoute.Comments}/${id}`);
-    dispatch(setOffersDataLoadingStatus(false));
+    dispatch(setCommentsLoadingStatus(false));
     dispatch(loadComments(data));
   },
 );
@@ -111,8 +111,10 @@ export const sendNewComment = createAsyncThunk<void, CommentSendType, {
 }>(
   'user/login',
   async ({comment, rating, hotelId}, {dispatch, extra: api}) => {
+    dispatch(setCommentsLoadingStatus(true));
     const {data} = await api.post<CommentType>(`${APIRoute.Comments}/${hotelId}`, {comment, rating});
     dispatch(sendComment(data));
-    dispatch(redirectToRouteOffer(`${AppRoute.Property}/${hotelId}`));
+    dispatch(setCommentsLoadingStatus(false));
+    store.dispatch(fetchCommentsAction(hotelId.toString()));
   },
 );

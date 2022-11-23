@@ -39,6 +39,7 @@ export const loadOffers = createAction<OfferType[]>('data/loadOffers');
 export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
 export const loadComments = createAction<CommentType[]>('data/loadComments');
 export const sendComment = createAction<CommentType>('data/sendComment');
+export const setCommentsLoadingStatus = createAction<boolean>('data/setCommentsLoadingStatus');
 
 export const setError = createAction<string | null>('offer/setError');
 
@@ -46,5 +47,4 @@ export const setStatusAuthorization = createAction<AuthorizationStatus>('user/se
 export const loadAuthInfo = createAction<UserData>('user/loadAuthInfo');
 
 export const redirectToRoute = createAction<AppRoute>('page/redirectToRoute');
-export const redirectToRouteOffer = createAction<string>('page/redirectToRouteOffer');
 

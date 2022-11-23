@@ -6,7 +6,6 @@ type commentProps = {
 
 function ReviewsItem ({comment}: commentProps) : JSX.Element {
 
-
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -20,7 +19,7 @@ function ReviewsItem ({comment}: commentProps) : JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${20 * Math.round(comment.rating)}%`}}></span>
             <span className="visually-hidden">{comment.rating}</span>
           </div>
         </div>
