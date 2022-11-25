@@ -32,13 +32,21 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Login}
-          element={<LoginPage />}
+          element={
+            <PrivateRoute
+              authorizationStatus={authorizationStatus}
+              pageType={AppRoute.Login}
+            >
+              <LoginPage />
+            </PrivateRoute>
+          }
         />
         <Route
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
               authorizationStatus={authorizationStatus}
+              pageType={AppRoute.Favorites}
             >
               <FavoritesPage />
             </PrivateRoute>

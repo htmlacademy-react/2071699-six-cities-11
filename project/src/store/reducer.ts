@@ -93,6 +93,7 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       state.allOffers = action.payload;
       state.offers = action.payload.filter((el) => el.city.name === initialState.selectedCityName);
+      state.offersNotSort = action.payload.filter((el) => el.city.name === initialState.selectedCityName);
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;

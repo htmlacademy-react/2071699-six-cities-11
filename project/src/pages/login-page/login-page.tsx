@@ -55,7 +55,7 @@ function LoginPage(): JSX.Element {
                   placeholder="Password"
                   required
                   ref={passwordRef}
-                  pattern="((?=.*\d)(?=.*\W+)).*"
+                  pattern="^(?=.*\d)(?=.*[a-zA-Z]).*$"
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
