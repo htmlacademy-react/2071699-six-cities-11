@@ -15,7 +15,6 @@ import {
   redirectToRoute,
   loadAuthInfo,
   loadComments,
-  sendComment,
   setCommentsLoadingStatus
 } from './action';
 
@@ -88,9 +87,9 @@ export const fetchCommentsAction = createAsyncThunk<void, string, {
   'data/fetchComments',
   async (id, {dispatch, extra: api}) => {
     dispatch(setCommentsLoadingStatus(true));
-    const {data} = await api.get<CommentType[]>(`${APIRoute.Comments}/${id}`);
+    const response = await api.get<CommentType[]>(`${APIRoute.Comments}/${id}`);
     dispatch(setCommentsLoadingStatus(false));
-    dispatch(loadComments(data));
+    dispatch(loadComments(response.data));
   },
 );
 
@@ -99,12 +98,11 @@ export const sendNewComment = createAsyncThunk<void, CommentSendType, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'user/login',
+  'data/sendNewComment',
   async ({comment, rating, hotelId}, {dispatch, extra: api}) => {
     dispatch(setCommentsLoadingStatus(true));
-    const {data} = await api.post<CommentType>(`${APIRoute.Comments}/${hotelId}`, {comment, rating});
-    dispatch(sendComment(data));
+    await api.post<CommentType>(`${APIRoute.Comments}/${hotelId}`, {comment, rating});
     dispatch(setCommentsLoadingStatus(false));
     store.dispatch(fetchCommentsAction(hotelId.toString()));
-  },
+  }
 );

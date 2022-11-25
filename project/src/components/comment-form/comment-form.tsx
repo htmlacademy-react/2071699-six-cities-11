@@ -1,11 +1,14 @@
+import {Fragment} from 'react';
 import {useState, FormEvent, useEffect} from 'react';
 import {useAppDispatch} from '../../hooks';
 import {sendNewComment} from '../../store/api-actions';
+import {RATING_STARS} from '../../constants';
 
 
 type CommentProps = {
   hotelId: number;
 }
+
 
 function CommentForm({hotelId}:CommentProps): JSX.Element {
   const EMPTY_COMMENT = {comment: '', rating: 0};
@@ -16,6 +19,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
   const commentChangeHandle = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
     setCommentData({...commentData, [name]: value});
+    evt.target.setAttribute('checked', 'true');
   };
   const dispatch = useAppDispatch();
 
@@ -24,13 +28,18 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
     if (commentData.comment.length >= 5 && commentData.comment.length <= 30 && commentData.rating !== 0) {
       dispatch(sendNewComment({
         comment: commentData.comment,
-        rating: commentData.rating.toString(),
+        rating: commentData.rating,
         hotelId: hotelId,
       }));
       setCommentData(EMPTY_COMMENT);
       setDisabledButton(true);
+      document.getElementsByName('rating').forEach((el)=>{
+        el.setAttribute('checked', 'false');
+        el.removeAttribute('checked');
+      });
     }
   };
+
 
   useEffect(() => {
     if (commentData.comment.length >= 5 && commentData.comment.length <= 30 && commentData.rating !== 0) {
@@ -41,44 +50,34 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
     }
   }, [commentData.comment, commentData.rating]);
 
+
+  const RatingInputs : JSX.Element[] = (
+    RATING_STARS.map((item) => (
+      <Fragment key={item}>
+        <input
+          className="form__rating-input visually-hidden"
+          name="rating"
+          value={item}
+          id={`${item}-stars`}
+          type="radio"
+          onChange={commentChangeHandle}
+        />
+        <label htmlFor={`${item}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
+          <svg className="form__star-image" width="37" height="33">
+            <use xlinkHref="#icon-star"></use>
+          </svg>
+        </label>
+      </Fragment>))
+
+  );
+
   return (
     <form className="reviews__form form" action="" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" onChange={commentChangeHandle} />
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
 
-        <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" onChange={commentChangeHandle} />
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+        {RatingInputs}
 
-        <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" onChange={commentChangeHandle} />
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" onChange={commentChangeHandle} />
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" onChange={commentChangeHandle} />
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
       </div>
       <textarea
         className="reviews__textarea form__textarea"

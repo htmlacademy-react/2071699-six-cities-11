@@ -19,6 +19,6 @@ export type CommentsOffersType = {
 
 export type CommentSendType = {
   comment: string;
-  rating: string;
+  rating: number;
   hotelId: number;
 }

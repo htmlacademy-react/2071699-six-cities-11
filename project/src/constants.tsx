@@ -39,3 +39,5 @@ export enum APIRoute {
   Logout = '/logout',
   Comments = '/comments',
 }
+
+export const RATING_STARS = ['1','2','3','4','5'];

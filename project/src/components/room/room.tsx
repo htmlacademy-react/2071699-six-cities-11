@@ -26,7 +26,7 @@ function RoomPage ({offer, offersForCity}: PropertyPageProps): JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {images.map((img) => (
-                <div className="property__image-wrapper" key={id}>
+                <div className="property__image-wrapper" key={img}>
                   <img className="property__image" src={img} alt="Studio" />
                 </div>
               )
@@ -76,7 +76,7 @@ function RoomPage ({offer, offersForCity}: PropertyPageProps): JSX.Element {
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {goods.map((good) => (
-                    <li className="property__inside-item" key={id}>
+                    <li className="property__inside-item" key={good}>
                       {good}
                     </li>))}
                 </ul>
