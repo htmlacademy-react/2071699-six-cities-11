@@ -13,6 +13,7 @@ type CommentProps = {
 function CommentForm({hotelId}:CommentProps): JSX.Element {
   const EMPTY_COMMENT = {comment: '', rating: 0};
   const [commentData, setCommentData] = useState(EMPTY_COMMENT);
+  const [currentChecked, setCurrentChecked] = useState<string | null>(null);
   const [disabledButton, setDisabledButton] = useState(true);
 
 
@@ -20,6 +21,9 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
     const {name, value} = evt.target;
     setCommentData({...commentData, [name]: value});
     evt.target.setAttribute('checked', 'true');
+    if (name === 'rating') {
+      setCurrentChecked(value);
+    }
   };
   const dispatch = useAppDispatch();
 
@@ -32,6 +36,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
         hotelId: hotelId,
       }));
       setCommentData(EMPTY_COMMENT);
+      setCurrentChecked(null);
       setDisabledButton(true);
       document.getElementsByName('rating').forEach((el)=>{
         el.setAttribute('checked', 'false');
@@ -52,7 +57,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
 
 
   const RatingInputs : JSX.Element[] = (
-    RATING_STARS.map((item) => (
+    [...RATING_STARS].reverse().map((item) => (
       <Fragment key={item}>
         <input
           className="form__rating-input visually-hidden"
@@ -61,6 +66,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
           id={`${item}-stars`}
           type="radio"
           onChange={commentChangeHandle}
+          checked={currentChecked === item}
         />
         <label htmlFor={`${item}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
