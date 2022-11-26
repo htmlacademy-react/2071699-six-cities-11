@@ -37,6 +37,7 @@ export enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
 }
 
-export const TIMEOUT_SHOW_ERROR = 2000;
+export const RATING_STARS = ['1','2','3','4','5'];

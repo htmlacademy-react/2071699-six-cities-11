@@ -10,6 +10,7 @@ function MainPageWithOffers(): JSX.Element {
   const offersForCity = useAppSelector((state) => state.offers);
   const selectedPoint = useAppSelector((state) => state.selectedPoint);
 
+
   return (
     <div className="cities__places-container container">
       <section className="cities__places places">

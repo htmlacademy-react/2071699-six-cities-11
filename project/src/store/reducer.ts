@@ -10,12 +10,15 @@ import {
   sortMenuView,
   loadOffers,
   setOffersDataLoadingStatus,
-  setError,
-  getStatusAuthorization,
+  setStatusAuthorization,
   loadAuthInfo,
+  loadComments,
+  sendComment,
+  setCommentsLoadingStatus,
 } from './action';
 import _ from 'lodash';
 import {OfferType, LocationType} from '../types/offers';
+import {CommentType} from '../types/comments';
 import {UserData} from '../types/user-data';
 import {SortTypes, AuthorizationStatus} from '../constants';
 
@@ -29,10 +32,12 @@ const initialState : {
   offersNotSort: OfferType[];
   offersFavotiteList: OfferType[];
   allOffers: OfferType[];
-  error: string | null;
   isOffersDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   authInfo: UserData | null;
+  comments: CommentType[];
+  userComment: CommentType | null;
+  isCommentsLoading: boolean;
 } = {
   selectedCityName: 'Paris',
   offers: [],
@@ -42,10 +47,12 @@ const initialState : {
   offersNotSort: [],
   offersFavotiteList: [],
   allOffers: [],
-  error: null,
   isOffersDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   authInfo: null,
+  comments: [],
+  userComment: null,
+  isCommentsLoading: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -86,18 +93,25 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       state.allOffers = action.payload;
       state.offers = action.payload.filter((el) => el.city.name === initialState.selectedCityName);
-    })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
+      state.offersNotSort = action.payload.filter((el) => el.city.name === initialState.selectedCityName);
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
     })
-    .addCase(getStatusAuthorization, (state, action) => {
+    .addCase(setStatusAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
     .addCase(loadAuthInfo, (state, action) => {
       state.authInfo = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = _.sortBy(action.payload, 'date').reverse();
+    })
+    .addCase(sendComment, (state, action) => {
+      state.userComment = action.payload;
+    })
+    .addCase(setCommentsLoadingStatus, (state, action) => {
+      state.isCommentsLoading = action.payload;
     });
 });
 

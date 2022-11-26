@@ -7,16 +7,12 @@ import LoginPage from '../../pages/login-page/login-page';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PropertyPage from '../../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
-import {CommentsOffersType} from '../../types/comments';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
-type OffersProps = {
-  commentsList: CommentsOffersType[];
-}
 
-function App({commentsList}: OffersProps): JSX.Element {
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isOffersDataLoading: boolean = useAppSelector((state) => state.isOffersDataLoading);
 
@@ -36,13 +32,21 @@ function App({commentsList}: OffersProps): JSX.Element {
         />
         <Route
           path={AppRoute.Login}
-          element={<LoginPage />}
+          element={
+            <PrivateRoute
+              authorizationStatus={authorizationStatus}
+              pageType={AppRoute.Login}
+            >
+              <LoginPage />
+            </PrivateRoute>
+          }
         />
         <Route
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
               authorizationStatus={authorizationStatus}
+              pageType={AppRoute.Favorites}
             >
               <FavoritesPage />
             </PrivateRoute>
@@ -50,7 +54,7 @@ function App({commentsList}: OffersProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Property}/:id`}
-          element={<PropertyPage commentsList={commentsList}/>}
+          element={<PropertyPage/>}
         />
         <Route
           path="*"

@@ -1,6 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
 import {OfferType} from '../types/offers';
 import {UserData} from '../types/user-data';
+import {CommentType} from '../types/comments';
 import {AppRoute, AuthorizationStatus} from '../constants';
 
 
@@ -36,10 +37,12 @@ export const sortMenuView = createAction('sort/sortMenuView');
 
 export const loadOffers = createAction<OfferType[]>('data/loadOffers');
 export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
+export const loadComments = createAction<CommentType[]>('data/loadComments');
+export const sendComment = createAction<CommentType>('data/sendComment');
+export const setCommentsLoadingStatus = createAction<boolean>('data/setCommentsLoadingStatus');
 
-export const setError = createAction<string | null>('offer/setError');
-
-export const getStatusAuthorization = createAction<AuthorizationStatus>('user/getStatusAuthorization');
+export const setStatusAuthorization = createAction<AuthorizationStatus>('user/setStatusAuthorization');
 export const loadAuthInfo = createAction<UserData>('user/loadAuthInfo');
 
 export const redirectToRoute = createAction<AppRoute>('page/redirectToRoute');
+
