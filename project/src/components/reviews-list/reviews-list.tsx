@@ -5,19 +5,22 @@ import {store} from '../../store';
 import {fetchCommentsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
+import {getCommentsDataLoadingStatus, getComments} from '../../store/comments-data/selectors';
 
 
 function ReviewsList () : JSX.Element {
-  const isCommentsLoading = useAppSelector((state) => state.isCommentsLoading);
+  const isCommentsLoading = useAppSelector(getCommentsDataLoadingStatus);
   const params = useParams();
   useEffect(() => {
     if(params.id) {
+      // eslint-disable-next-line no-console
+      console.log(params.id);
       store.dispatch(fetchCommentsAction(params.id.toString()));
     }
   }, [params.id]);
 
-  const commentsByOfferAll = useAppSelector((state) => state.comments);
-  const commentsByOffer = useAppSelector((state) => state.comments).slice(0, 10);
+  const commentsByOfferAll = useAppSelector(getComments);
+  const commentsByOffer = commentsByOfferAll.slice(0, 10);
   const countComments = commentsByOfferAll ? commentsByOfferAll.length : 0;
 
 

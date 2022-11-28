@@ -3,12 +3,13 @@ import {AppRoute} from '../../constants';
 import OffersList from '../../components/offers-list/offers-list';
 import SortForm from '../../components/sort-types/sort-types';
 import Map from '../../components/map/map';
+import {getSelectedPoint, getSelectedCityName, getOffers} from '../../store/offers-data/selectors';
 
 
 function MainPageWithOffers(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.selectedCityName);
-  const offersForCity = useAppSelector((state) => state.offers);
-  const selectedPoint = useAppSelector((state) => state.selectedPoint);
+  const currentCity = useAppSelector(getSelectedCityName);
+  const offersForCity = useAppSelector(getOffers);
+  const selectedPoint = useAppSelector(getSelectedPoint);
 
 
   return (

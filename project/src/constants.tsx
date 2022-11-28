@@ -41,3 +41,11 @@ export enum APIRoute {
 }
 
 export const RATING_STARS = ['1','2','3','4','5'];
+
+export enum NameSpace {
+  DataOffers = 'DATA_OFFERS',
+  DataComments = 'DATA_COMMENTS',
+  Sort = 'SORT',
+  User = 'USER',
+  Offers = 'OFFERS',
+}

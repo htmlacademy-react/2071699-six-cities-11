@@ -6,15 +6,16 @@ import MainPageWithOffers from '../../components/main-page-offers/main-page-offe
 import ListCities from '../../components/list-cities/list-cities';
 import useScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
 import {OfferType} from '../../types/offers';
+import {getSelectedCityName} from '../../store/offers-data/selectors';
+import {getAllOffers} from '../../store/offers-data/selectors';
 
 
 function MainPage(): JSX.Element {
   useScrollToTop();
-  const selectedCityName = useAppSelector((state) => state.selectedCityName);
-  const offersList: OfferType[] = useAppSelector((state) => state.allOffers);
+  const selectedCityName = useAppSelector(getSelectedCityName);
+  const allOffers: OfferType[] = useAppSelector(getAllOffers);
 
-
-  const offersForCurrentCity = offersList.filter((offer) => offer.city.name === selectedCityName);
+  const offersForCurrentCity = allOffers.filter((offer) => offer.city.name === selectedCityName);
   const offersCountForCity = offersForCurrentCity ? offersForCurrentCity.length : 0 ;
   return (
     <div className="page page--gray page--main">
@@ -24,7 +25,7 @@ function MainPage(): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              {CITIES.map((city) => (<ListCities key={city} cityName={city} offersList={offersList} />))}
+              {CITIES.map((city) => (<ListCities key={city} cityName={city} allOffers={allOffers} />))}
             </ul>
           </section>
         </div>
