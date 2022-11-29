@@ -3,4 +3,3 @@ import {AppRoute} from '../constants';
 
 
 export const redirectToRoute = createAction<AppRoute>('page/redirectToRoute');
-

@@ -12,6 +12,7 @@ export type UserProcess = {
 export type OffersData = {
   allOffers: OfferType[];
   isOffersDataLoading: boolean;
+  hasError: boolean;
 
   selectedCityName: string;
   offers: OfferType[];
@@ -23,10 +24,10 @@ export type OffersData = {
 export type CommentsData = {
   comments: CommentType[];
   isCommentsLoading: boolean;
+  hasErrorComments: boolean;
 };
 
 export type SortOffers = {
-  offers: OfferType[];
   sortType: string;
   sortView: string;
 };

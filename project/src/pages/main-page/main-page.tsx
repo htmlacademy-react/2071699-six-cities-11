@@ -25,7 +25,7 @@ function MainPage(): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              {CITIES.map((city) => (<ListCities key={city} cityName={city} allOffers={allOffers} />))}
+              {CITIES.map((city) => (<ListCities key={city} cityName={city} />))}
             </ul>
           </section>
         </div>

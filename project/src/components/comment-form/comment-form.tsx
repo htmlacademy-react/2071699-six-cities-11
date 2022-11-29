@@ -38,10 +38,6 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
       setCommentData(EMPTY_COMMENT);
       setCurrentChecked(null);
       setDisabledButton(true);
-      document.getElementsByName('rating').forEach((el)=>{
-        el.setAttribute('checked', 'false');
-        el.removeAttribute('checked');
-      });
     }
   };
 

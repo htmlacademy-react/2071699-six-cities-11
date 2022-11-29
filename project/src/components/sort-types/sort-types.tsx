@@ -1,42 +1,18 @@
 import {MouseEvent} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {SortTypes, SortTypesArray} from '../../constants';
+import {SortTypesArray} from '../../constants';
 import {getSortType, getSortView} from '../../store/sort-process/selectors';
-import {
-  sortOffersPriceLow,
-  sortOffersPriceHigh,
-  sortOffersPopular,
-  sortOffersRating,
-  sortMenuView
-} from '../../store/sort-process/sort-process';
-import {getOffersNotSort} from '../../store/offers-data/selectors';
+import {sortOffersType, sortMenuView} from '../../store/sort-process/sort-process';
 
 
 function SortForm(): JSX.Element {
 
   const currentSortType = useAppSelector(getSortType);
   const currentSortView = useAppSelector(getSortView);
-  const offersNotSort = useAppSelector(getOffersNotSort);
   const dispatch = useAppDispatch();
 
   const handleChange = (event : MouseEvent<HTMLLIElement, globalThis.MouseEvent>) => {
-    switch (event.currentTarget.innerText) {
-      case SortTypes.Popular:
-        dispatch(sortOffersPopular({offersNotSort}));
-        break;
-      case SortTypes.PriceHigh:
-        dispatch(sortOffersPriceHigh());
-        break;
-      case SortTypes.PriceLow:
-        dispatch(sortOffersPriceLow());
-        break;
-      case SortTypes.Rating:
-        dispatch(sortOffersRating());
-        break;
-      default:
-        dispatch(sortOffersPopular({offersNotSort}));
-        break;
-    }
+    dispatch(sortOffersType({currentType: event.currentTarget.innerText}));
   };
   return (
     <form className="places__sorting" action="#" method="get">

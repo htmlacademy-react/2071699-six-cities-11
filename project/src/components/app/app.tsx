@@ -8,16 +8,18 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PropertyPage from '../../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import ErrorScreen from '../../pages/error-screen/error-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import {getAuthorizationStatus, getAuthCheckedStatus} from '../../store/user-process/selectors';
-import {getOffersDataLoadingStatus} from '../../store/offers-data/selectors';
+import {getOffersDataLoadingStatus, getErrorStatus} from '../../store/offers-data/selectors';
 
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
+  const hasError = useAppSelector(getErrorStatus);
 
   if (!isAuthChecked || isOffersDataLoading) {
     return (
@@ -25,6 +27,10 @@ function App(): JSX.Element {
     );
   }
 
+  if (hasError) {
+    return (
+      <ErrorScreen />);
+  }
 
   return (
     <HistoryRouter history={browserHistory}>

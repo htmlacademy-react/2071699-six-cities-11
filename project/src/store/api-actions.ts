@@ -8,6 +8,8 @@ import {UserData} from '../types/user-data';
 import {APIRoute, AppRoute} from '../constants';
 import {saveToken, dropToken} from '../services/token';
 import {redirectToRoute} from './action';
+import {loadAuthInfo} from '../store/user-process/user-process';
+import {loadCommentsNew} from '../store/comments-data/comments-data';
 
 export const fetchOffersAction = createAsyncThunk<OfferType[], undefined, {
   dispatch: AppDispatch;
@@ -21,14 +23,15 @@ export const fetchOffersAction = createAsyncThunk<OfferType[], undefined, {
   },
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
-    await api.get(APIRoute.Login);
+    const {data} = await api.get<UserData>(APIRoute.Login);
+    return data;
   },
 );
 
@@ -42,6 +45,8 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   async ({login: email, password}, {dispatch, extra: api}) => {
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(token);
+    const {data} = await api.get<UserData>(APIRoute.Login);
+    dispatch(loadAuthInfo({authInfo: data}));
     dispatch(redirectToRoute(AppRoute.Main));
   },
 );
@@ -78,7 +83,7 @@ export const sendNewComment = createAsyncThunk<void, CommentSendType, {
 }>(
   'data/sendNewComment',
   async ({comment, rating, hotelId}, {dispatch, extra: api}) => {
-    await api.post<CommentType>(`${APIRoute.Comments}/${hotelId}`, {comment, rating});
-    // store.dispatch(fetchCommentsAction(hotelId.toString()));
+    const {data} = await api.post<CommentType[]>(`${APIRoute.Comments}/${hotelId}`, {comment, rating});
+    dispatch(loadCommentsNew({comments: data}));
   }
 );
