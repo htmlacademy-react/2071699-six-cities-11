@@ -1,6 +1,6 @@
 import {Route, Routes} from 'react-router-dom';
 import {useAppSelector} from '../../hooks';
-import {AppRoute, AuthorizationStatus} from '../../constants';
+import {AppRoute} from '../../constants';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
@@ -8,20 +8,29 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PropertyPage from '../../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import ErrorScreen from '../../pages/error-screen/error-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import {getAuthorizationStatus, getAuthCheckedStatus} from '../../store/user-process/selectors';
+import {getOffersDataLoadingStatus, getErrorStatus} from '../../store/offers-data/selectors';
 
 
 function App(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOffersDataLoading: boolean = useAppSelector((state) => state.isOffersDataLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
+  const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
+  const hasError = useAppSelector(getErrorStatus);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+  if (!isAuthChecked || isOffersDataLoading) {
     return (
       <LoadingScreen />
     );
   }
 
+  if (hasError) {
+    return (
+      <ErrorScreen />);
+  }
 
   return (
     <HistoryRouter history={browserHistory}>

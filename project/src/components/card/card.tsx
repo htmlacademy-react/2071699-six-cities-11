@@ -2,13 +2,12 @@ import {OfferType} from '../../types/offers';
 import {AppRoute} from '../../constants';
 import {Link} from 'react-router-dom';
 import {useState, useEffect} from 'react';
-import {getCurrentPoint} from '../../store/action';
 import {useAppDispatch} from '../../hooks';
 import {generatePath } from 'react-router';
+import {getCurrentPoint} from '../../store/offers-data/offers-data';
 
 type CardProps = {
   card: OfferType;
-
   pageType: string;
 };
 
@@ -51,8 +50,8 @@ function CardScreen(props:CardProps): JSX.Element {
   return (
     <article
       className={`${settingPage.className}__card place-card`}
-      onMouseEnter={() => dispatch(getCurrentPoint(card, true))}
-      onMouseLeave={() => dispatch(getCurrentPoint(card, false))}
+      onMouseEnter={() => dispatch(getCurrentPoint({offer: card, isAction:true}))}
+      onMouseLeave={() => dispatch(getCurrentPoint({offer: card, isAction: false}))}
     >
       {card.isPremium ?
         <div className="place-card__mark">
@@ -87,7 +86,11 @@ function CardScreen(props:CardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={generatePath(`${AppRoute.Property}/:id`, { id: card.id.toString()})} onClick={() => dispatch(getCurrentPoint(card, false))}>{card.title}</Link>
+          <Link
+            to={generatePath(`${AppRoute.Property}/:id`, { id: card.id.toString()})}
+            onClick={() => dispatch(getCurrentPoint({offer: card, isAction:false}))}
+          >{card.title}
+          </Link>
         </h2>
         <p className="place-card__type">{card.typeOffer}</p>
       </div>

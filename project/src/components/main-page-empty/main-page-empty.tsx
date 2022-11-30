@@ -1,7 +1,8 @@
 import {useAppSelector} from '../../hooks';
+import {getSelectedCityName} from '../../store/offers-data/selectors';
 
 function MainPageEmpty(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.selectedCityName);
+  const currentCity = useAppSelector(getSelectedCityName);
   return (
     <div className="cities__places-container cities__places-container--empty container">
       <section className="cities__no-places">

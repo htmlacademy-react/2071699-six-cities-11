@@ -3,11 +3,12 @@ import {Link} from 'react-router-dom';
 import {logoutAction} from '../../store/api-actions';
 import {useAppSelector} from '../../hooks';
 import {MouseEvent} from 'react';
+import {getAuthInfo} from '../../store/user-process/selectors';
 
 function HeaderAuth(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const authInfo = useAppSelector((state) => state.authInfo);
+  const authInfo = useAppSelector(getAuthInfo);
 
   const handleOnClick = (evt: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
     evt.preventDefault();

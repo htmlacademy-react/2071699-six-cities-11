@@ -2,10 +2,11 @@ import {useAppSelector} from '../../hooks';
 import {AuthorizationStatus} from '../../constants';
 import HeaderAuth from '../../components/header-auth/header-auth';
 import HeaderNoAuth from '../../components/header-noauth/header-noauth';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 
 function HeaderMainPage(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   return (
     <header className="header">
       <div className="container">

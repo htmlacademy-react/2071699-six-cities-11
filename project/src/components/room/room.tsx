@@ -6,6 +6,7 @@ import Map from '../../components/map/map';
 import HeaderMainPage from '../../components/main-page-header/main-page-header';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppSelector} from '../../hooks';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 type PropertyPageProps = {
   offer: OfferType;
@@ -15,7 +16,7 @@ type PropertyPageProps = {
 
 function RoomPage ({offer, offersForCity}: PropertyPageProps): JSX.Element {
   const {id, images, isPremium, title, rating, typeOffer, bedrooms, maxAdults, price, goods, host, description} = offer;
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const OffersNearby = offersForCity.filter((el) => el.id !== id);
   return (

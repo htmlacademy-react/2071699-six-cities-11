@@ -1,33 +1,18 @@
 import {MouseEvent} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {sortOffersPriceLow, sortOffersPriceHigh, sortOffersPopular, sortOffersRating, sortMenuView} from '../../store/action';
-import {SortTypes, SortTypesArray} from '../../constants';
+import {SortTypesArray} from '../../constants';
+import {getSortType, getSortView} from '../../store/sort-process/selectors';
+import {sortOffersType, sortMenuView} from '../../store/sort-process/sort-process';
 
 
 function SortForm(): JSX.Element {
 
-  const currentSortType = useAppSelector((state) => state.sortType);
-  const currentSortView = useAppSelector((state) => state.sortView);
+  const currentSortType = useAppSelector(getSortType);
+  const currentSortView = useAppSelector(getSortView);
   const dispatch = useAppDispatch();
 
   const handleChange = (event : MouseEvent<HTMLLIElement, globalThis.MouseEvent>) => {
-    switch (event.currentTarget.innerText) {
-      case SortTypes.Popular:
-        dispatch(sortOffersPopular());
-        break;
-      case SortTypes.PriceHigh:
-        dispatch(sortOffersPriceHigh());
-        break;
-      case SortTypes.PriceLow:
-        dispatch(sortOffersPriceLow());
-        break;
-      case SortTypes.Rating:
-        dispatch(sortOffersRating());
-        break;
-      default:
-        dispatch(sortOffersPopular());
-        break;
-    }
+    dispatch(sortOffersType({currentType: event.currentTarget.innerText}));
   };
   return (
     <form className="places__sorting" action="#" method="get">
