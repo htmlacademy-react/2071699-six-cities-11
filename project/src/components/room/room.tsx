@@ -17,7 +17,7 @@ type PropertyPageProps = {
 function RoomPage ({offer, nearbyOffers}: PropertyPageProps): JSX.Element {
   const {id, images, isPremium, title, rating, typeOffer, bedrooms, maxAdults, price, goods, host, description} = offer;
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
+  const offersForMap = [...nearbyOffers].concat([offer]);
   return (
     <div className="page">
       <HeaderMainPage />
@@ -109,7 +109,7 @@ function RoomPage ({offer, nearbyOffers}: PropertyPageProps): JSX.Element {
             </div>
           </div>
           <section className="property__map">
-            <Map city={offer.city} offers={nearbyOffers} classNameMap={'property'}/>
+            <Map city={offer.city} offers={offersForMap} selectedPoint={offer.location} classNameMap={'property'}/>
           </section>
         </section>
         <div className="container">

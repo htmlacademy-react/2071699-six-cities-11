@@ -21,7 +21,7 @@ function ReviewsList () : JSX.Element {
 
   const commentsByOfferAll = useAppSelector(getComments);
   const commentsByOffer = commentsByOfferAll.slice(0, COUNT_COMMENTS_VIEW);
-  const countComments = commentsByOfferAll ? commentsByOfferAll.length : 0;
+  const countComments = commentsByOffer ? commentsByOffer.length : 0;
 
 
   if (isCommentsLoading) {
