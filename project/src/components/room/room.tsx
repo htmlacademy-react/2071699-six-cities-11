@@ -7,6 +7,7 @@ import HeaderMainPage from '../../components/main-page-header/main-page-header';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppSelector} from '../../hooks';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {useParams} from 'react-router-dom';
 
 type PropertyPageProps = {
   offer: OfferType;
@@ -18,6 +19,8 @@ function RoomPage ({offer, nearbyOffers}: PropertyPageProps): JSX.Element {
   const {id, images, isPremium, title, rating, typeOffer, bedrooms, maxAdults, price, goods, host, description} = offer;
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const offersForMap = [...nearbyOffers].concat([offer]);
+  const params = useParams();
+  const paramsId = params.id ? params.id : '-1';
   return (
     <div className="page">
       <HeaderMainPage />
@@ -109,7 +112,7 @@ function RoomPage ({offer, nearbyOffers}: PropertyPageProps): JSX.Element {
             </div>
           </div>
           <section className="property__map">
-            <Map city={offer.city} offers={offersForMap} selectedPoint={offer.location} classNameMap={'property'}/>
+            <Map city={offer.city} offers={offersForMap} selectedPoint={offer.location} classNameMap={'property'} paramsId={paramsId}/>
           </section>
         </section>
         <div className="container">

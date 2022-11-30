@@ -25,7 +25,7 @@ function MainPageWithOffers(): JSX.Element {
       </section>
       <div className="cities__right-section">
 
-        <Map city={offersForCity[0].city} offers={offersForCity} selectedPoint={selectedPoint} classNameMap={'cities'}/>
+        <Map city={offersForCity[0].city} offers={offersForCity} selectedPoint={selectedPoint} classNameMap={'cities'} paramsId={'-1'}/>
       </div>
     </div>
 
