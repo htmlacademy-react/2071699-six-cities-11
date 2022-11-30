@@ -1,6 +1,6 @@
 import {Route, Routes} from 'react-router-dom';
 import {useAppSelector} from '../../hooks';
-import {AppRoute} from '../../constants';
+import {AppRoute, AuthorizationStatus} from '../../constants';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
@@ -13,13 +13,22 @@ import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import {getAuthorizationStatus, getAuthCheckedStatus} from '../../store/user-process/selectors';
 import {getOffersDataLoadingStatus, getErrorStatus} from '../../store/offers-data/selectors';
-
+import {store} from '../../store';
+import {fetchFavorites} from '../../store/api-actions';
+import {useEffect} from 'react';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
   const hasError = useAppSelector(getErrorStatus);
+
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      store.dispatch(fetchFavorites());
+    }
+  }, [authorizationStatus]);
 
   if (!isAuthChecked || isOffersDataLoading) {
     return (

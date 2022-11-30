@@ -29,7 +29,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (commentData.comment.length >= 5 && commentData.comment.length <= 30 && commentData.rating !== 0) {
+    if (commentData.comment.length >= 50 && commentData.comment.length <= 300 && commentData.rating !== 0) {
       dispatch(sendNewComment({
         comment: commentData.comment,
         rating: commentData.rating,
@@ -43,7 +43,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
 
 
   useEffect(() => {
-    if (commentData.comment.length >= 5 && commentData.comment.length <= 30 && commentData.rating !== 0) {
+    if (commentData.comment.length >= 50 && commentData.comment.length <= 300 && commentData.rating !== 0) {
       setDisabledButton(false);
     }
     else {

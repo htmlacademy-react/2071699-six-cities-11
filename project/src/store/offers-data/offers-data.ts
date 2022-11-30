@@ -11,9 +11,7 @@ const initialState: OffersData = {
 
   selectedCityName: 'Paris',
   offers: [],
-  offersNotSort: [],
   selectedPoint: null,
-  offersFavotiteList: [],
 };
 
 

@@ -7,7 +7,7 @@ import {fetchCommentsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {getCommentsDataLoadingStatus, getComments, getErrorStatusComments} from '../../store/comments-data/selectors';
-import {AppRoute} from '../../constants';
+import {AppRoute, COUNT_COMMENTS_VIEW} from '../../constants';
 
 function ReviewsList () : JSX.Element {
   const isCommentsLoading = useAppSelector(getCommentsDataLoadingStatus);
@@ -20,7 +20,7 @@ function ReviewsList () : JSX.Element {
   }, [params.id]);
 
   const commentsByOfferAll = useAppSelector(getComments);
-  const commentsByOffer = commentsByOfferAll.slice(0, 10);
+  const commentsByOffer = commentsByOfferAll.slice(0, COUNT_COMMENTS_VIEW);
   const countComments = commentsByOfferAll ? commentsByOfferAll.length : 0;
 
 

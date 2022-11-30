@@ -38,6 +38,7 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export const RATING_STARS = ['1','2','3','4','5'];
@@ -47,5 +48,8 @@ export enum NameSpace {
   DataComments = 'DATA_COMMENTS',
   Sort = 'SORT',
   User = 'USER',
-  Offers = 'OFFERS',
+  DataNearby = 'DATA_NEAR',
+  Favorites = 'FAVORITES',
 }
+
+export const COUNT_COMMENTS_VIEW = 10;

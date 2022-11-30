@@ -42,8 +42,10 @@ export const createAPI = (): AxiosInstance => {
         if (targetUrl === '/hotels') {toast.warn('Список предложений не загружен');}
         if (targetUrl?.includes('/comments') && method === 'get') {toast.warn('Список комментариев не загружен');}
         if (targetUrl?.includes('/comments') && method === 'post') {toast.warn('Комментарий не отправлен');}
+        if (targetUrl?.includes('/favorite') && method === 'get') {toast.warn('Список избранных предложений не загружен');}
+        if (targetUrl?.includes('/favorite') && method === 'post') {toast.warn('Предложение не добавлено в избранное');}
 
-        if (!targetUrl?.includes('/comments') && targetUrl !== '/login' && targetUrl !== '/hotels')
+        if (!targetUrl?.includes('/comments') && targetUrl !== '/login' && targetUrl !== '/hotels' && !targetUrl?.includes('/favorite'))
         {toast.warn(error.response.data.error);}
       }
 
