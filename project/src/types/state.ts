@@ -22,6 +22,7 @@ export type CommentsData = {
   comments: CommentType[];
   isCommentsLoading: boolean;
   hasErrorComments: boolean;
+  isSending: boolean;
 };
 
 export type SortOffers = {

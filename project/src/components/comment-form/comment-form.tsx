@@ -1,8 +1,9 @@
 import {Fragment} from 'react';
 import {useState, FormEvent, useEffect} from 'react';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {sendNewComment} from '../../store/api-actions';
 import {RATING_STARS} from '../../constants';
+import {getStatusSending} from '../../store/comments-data/selectors';
 
 
 type CommentProps = {
@@ -15,6 +16,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
   const [commentData, setCommentData] = useState(EMPTY_COMMENT);
   const [currentChecked, setCurrentChecked] = useState<string | null>(null);
   const [disabledButton, setDisabledButton] = useState(true);
+  const [disabledInput, setDisabledInput] = useState(false);
 
 
   const commentChangeHandle = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -40,7 +42,16 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
       setDisabledButton(true);
     }
   };
+  const isSending = useAppSelector(getStatusSending);
 
+  useEffect(() => {
+    if (isSending) {
+      setDisabledInput(true);
+    }
+    else {
+      setDisabledInput(false);
+    }
+  }, [isSending]);
 
   useEffect(() => {
     if (commentData.comment.length >= 50 && commentData.comment.length <= 300 && commentData.rating !== 0) {
@@ -50,7 +61,6 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
       setDisabledButton(true);
     }
   }, [commentData.comment, commentData.rating]);
-
 
   const RatingInputs : JSX.Element[] = (
     [...RATING_STARS].reverse().map((item) => (
@@ -63,6 +73,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
           type="radio"
           onChange={commentChangeHandle}
           checked={currentChecked === item}
+          disabled={disabledInput}
         />
         <label htmlFor={`${item}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -88,6 +99,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
         value={commentData.comment}
         onChange={commentChangeHandle}
         placeholder="Tell how was your stay, what you like and what can be improved"
+        disabled={disabledInput}
       >
       </textarea>
       <div className="reviews__button-wrapper">
