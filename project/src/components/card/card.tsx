@@ -16,18 +16,29 @@ type CardProps = {
 
 function CardScreen(props:CardProps): JSX.Element {
   const {card, pageType} = props;
+
   const dispatch = useAppDispatch();
   const offersFavorList = useAppSelector(getFavorites);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const [isFavorite, setIsFavorite] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getCurrentPoint({offer: card, isAction: false}));
+  }, [card, dispatch]);
+
 
   useEffect(() => {
     if (offersFavorList && offersFavorList.length !== 0) {
       const cardIsFavorite = offersFavorList.filter((offer) => offer.id === card.id).length;
       setIsFavorite(cardIsFavorite !== 0);
     }
-  }, [card.id, offersFavorList]);
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      setIsFavorite(false);
+    }
+  }, [authorizationStatus, card.id, offersFavorList]);
 
 
   const [settingPage, setSettingPage] = useState({
@@ -62,7 +73,6 @@ function CardScreen(props:CardProps): JSX.Element {
         break;
     }}, [pageType]);
 
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const handleIsFavotiteClick = () =>{
     if (authorizationStatus === AuthorizationStatus.Auth) {
       const status = isFavorite ? 0 : 1;
@@ -88,9 +98,12 @@ function CardScreen(props:CardProps): JSX.Element {
       <div
         className={`${settingPage.className}__image-wrapper place-card__image-wrapper`}
       >
-        <a href="/">
+        <Link
+          to={generatePath(`${AppRoute.Property}/:id`, { id: card.id.toString()})}
+          onClick={() => dispatch(getCurrentPoint({offer: card, isAction:false}))}
+        >
           <img className="place-card__image" src={card.previewImage} width={settingPage.widthImg} height={settingPage.heightImg} alt="Place" />
-        </a>
+        </Link>
       </div>
       <div className={`${settingPage.className === 'favorites' ? 'favorites__card-info ' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">

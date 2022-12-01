@@ -29,9 +29,10 @@ function HeaderAuth(): JSX.Element {
         </Link>
       </li>
       <li className="header__nav-item">
-        <Link className="header__nav-link"
+        <Link
+          to={AppRoute.Main}
+          className="header__nav-link"
           onClick={handleOnClick}
-          to='/'
         >
           <span className="header__signout">Sign out</span>
         </Link>

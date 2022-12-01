@@ -1,14 +1,24 @@
 import CardScreen from '../../components/card/card';
 import {OfferType} from '../../types/offers';
 import {AppRoute} from '../../constants';
+import {Link} from 'react-router-dom';
+import {useAppDispatch} from '../../hooks';
+import {changeCity} from '../../store/offers-data/offers-data';
+import {resetSort} from '../../store/sort-process/sort-process';
 
 type OffersListProps = {
   offersFavorList: OfferType[];
 }
 
-function FavoritesPageOffers({offersFavorList}: OffersListProps): JSX.Element {
 
+function FavoritesPageOffers({offersFavorList}: OffersListProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const citiesList: string[] = [...new Set(offersFavorList.map((el)=> el.city.name))];
+
+  const itemHoverHandler = (currentCity: string) => {
+    dispatch(changeCity({currentCity}));
+    dispatch(resetSort());
+  };
 
   return (
     <main className="page__main page__main--favorites">
@@ -20,9 +30,13 @@ function FavoritesPageOffers({offersFavorList}: OffersListProps): JSX.Element {
               <li key={city} className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
-                    <a className="locations__item-link" href="/">
+                    <Link
+                      className="locations__item-link"
+                      to={AppRoute.Main}
+                      onClick={()=>itemHoverHandler(city)}
+                    >
                       <span>{city}</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="favorites__places">

@@ -53,3 +53,5 @@ export enum NameSpace {
 }
 
 export const COUNT_COMMENTS_VIEW = 10;
+export const MIN_LENGTH_COMMENT = 50;
+export const MAX_LENGTH_COMMENT = 300;

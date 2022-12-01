@@ -5,30 +5,32 @@ import FavoritesPageOffers from '../../components/favorites-page-offers/favorite
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import ErrorScreen from '../../pages/error-screen/error-screen';
 import useScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
-import {useAppSelector} from '../../hooks';
-import {store} from '../../store';
+import {useAppSelector, useAppDispatch} from '../../hooks';
+import {getFavorites, getOffersDataLoadingStatus, getErrorFavoriteStatus} from '../../store/favotites-data/selectors';
+import {toast} from 'react-toastify';
 import {fetchFavorites} from '../../store/api-actions';
-import {useEffect} from 'react';
-import {getFavorites, getOffersDataLoadingStatus, getErrorStatus} from '../../store/favotites-data/selectors';
-import {AppRoute} from '../../constants';
 
 function FavoritesPage(): JSX.Element {
   useScrollToTop();
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    store.dispatch(fetchFavorites());
-  }, []);
+  const onReload = () => {
+    dispatch(fetchFavorites());
+  };
   const offersFavorList = useAppSelector(getFavorites);
 
   const isFavoritesDataLoading = useAppSelector(getOffersDataLoadingStatus);
-  const hasErrorFavorites = useAppSelector(getErrorStatus);
+  const hasErrorFavorites = useAppSelector(getErrorFavoriteStatus);
 
   if (isFavoritesDataLoading) {
     return (<LoadingScreen />);
   }
-  if (hasErrorFavorites) {
-    return (<ErrorScreen pageType={AppRoute.Favorites}/>);
+  if (hasErrorFavorites && !isFavoritesDataLoading) {
+    toast.warn('Список избранных предложений не загружен');
+    return (<ErrorScreen message={'список избранных предложений'} onReload={onReload}/>);
   }
+
+
   return (
     <div className="page">
       <HeaderMainPage />
@@ -37,4 +39,5 @@ function FavoritesPage(): JSX.Element {
     </div>);
 }
 export default FavoritesPage;
+
 

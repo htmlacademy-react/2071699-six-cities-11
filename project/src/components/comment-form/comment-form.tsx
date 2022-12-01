@@ -2,7 +2,7 @@ import {Fragment} from 'react';
 import {useState, FormEvent, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {sendNewComment} from '../../store/api-actions';
-import {RATING_STARS} from '../../constants';
+import {RATING_STARS, MIN_LENGTH_COMMENT, MAX_LENGTH_COMMENT} from '../../constants';
 import {getStatusSending} from '../../store/comments-data/selectors';
 
 
@@ -16,8 +16,6 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
   const [commentData, setCommentData] = useState(EMPTY_COMMENT);
   const [currentChecked, setCurrentChecked] = useState<string | null>(null);
   const [disabledButton, setDisabledButton] = useState(true);
-  const [disabledInput, setDisabledInput] = useState(false);
-
 
   const commentChangeHandle = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
@@ -31,7 +29,11 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (commentData.comment.length >= 50 && commentData.comment.length <= 300 && commentData.rating !== 0) {
+    if (
+      commentData.comment.length >= MIN_LENGTH_COMMENT
+      && commentData.comment.length <= MAX_LENGTH_COMMENT
+      && commentData.rating !== 0
+    ) {
       dispatch(sendNewComment({
         comment: commentData.comment,
         rating: commentData.rating,
@@ -43,18 +45,14 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
     }
   };
   const isSending = useAppSelector(getStatusSending);
+  const isDisabledInput = isSending;
 
   useEffect(() => {
-    if (isSending) {
-      setDisabledInput(true);
-    }
-    else {
-      setDisabledInput(false);
-    }
-  }, [isSending]);
-
-  useEffect(() => {
-    if (commentData.comment.length >= 50 && commentData.comment.length <= 300 && commentData.rating !== 0) {
+    if (
+      commentData.comment.length >= MIN_LENGTH_COMMENT
+      && commentData.comment.length <= MAX_LENGTH_COMMENT
+      && commentData.rating !== 0
+    ) {
       setDisabledButton(false);
     }
     else {
@@ -73,7 +71,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
           type="radio"
           onChange={commentChangeHandle}
           checked={currentChecked === item}
-          disabled={disabledInput}
+          disabled={isDisabledInput}
         />
         <label htmlFor={`${item}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -99,7 +97,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
         value={commentData.comment}
         onChange={commentChangeHandle}
         placeholder="Tell how was your stay, what you like and what can be improved"
-        disabled={disabledInput}
+        disabled={isDisabledInput}
       >
       </textarea>
       <div className="reviews__button-wrapper">

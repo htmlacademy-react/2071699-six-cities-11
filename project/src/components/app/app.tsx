@@ -1,5 +1,5 @@
 import {Route, Routes} from 'react-router-dom';
-import {useAppSelector} from '../../hooks';
+import {useAppSelector, useAppDispatch} from '../../hooks';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -16,19 +16,24 @@ import {getOffersDataLoadingStatus, getErrorStatus} from '../../store/offers-dat
 import {store} from '../../store';
 import {fetchFavorites} from '../../store/api-actions';
 import {useEffect} from 'react';
+import {toast} from 'react-toastify';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
   const hasError = useAppSelector(getErrorStatus);
-
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       store.dispatch(fetchFavorites());
     }
   }, [authorizationStatus]);
+
+  const onReload = () => {
+    dispatch(fetchFavorites());
+  };
 
   if (!isAuthChecked || isOffersDataLoading) {
     return (
@@ -37,8 +42,9 @@ function App(): JSX.Element {
   }
 
   if (hasError) {
+    toast.warn('Список предложений не загружен');
     return (
-      <ErrorScreen />);
+      <ErrorScreen message={'список предложений'} onReload={onReload}/>);
   }
 
   return (
