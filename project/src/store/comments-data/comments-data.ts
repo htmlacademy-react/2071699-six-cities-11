@@ -10,6 +10,7 @@ const initialState: CommentsData = {
   isCommentsLoading: false,
   hasErrorComments: false,
   isSending: false,
+  hasErrorSend: false,
 };
 
 export const commentsData = createSlice({
@@ -35,9 +36,15 @@ export const commentsData = createSlice({
       })
       .addCase(sendNewComment.pending, (state) => {
         state.isSending = true;
+        state.hasErrorSend = false;
       })
       .addCase(sendNewComment.fulfilled, (state) => {
         state.isSending = false;
+        state.hasErrorSend = false;
+      })
+      .addCase(sendNewComment.rejected, (state) => {
+        state.isSending = false;
+        state.hasErrorSend = true;
       });
   }
 });

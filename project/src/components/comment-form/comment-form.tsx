@@ -3,8 +3,8 @@ import {useState, FormEvent, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {sendNewComment} from '../../store/api-actions';
 import {RATING_STARS, MIN_LENGTH_COMMENT, MAX_LENGTH_COMMENT} from '../../constants';
-import {getStatusSending} from '../../store/comments-data/selectors';
-
+import {getStatusSending, getErrorSend} from '../../store/comments-data/selectors';
+import {toast} from 'react-toastify';
 
 type CommentProps = {
   hotelId: number;
@@ -44,8 +44,13 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
       setDisabledButton(true);
     }
   };
+  const isErrorSending = useAppSelector(getErrorSend);
   const isSending = useAppSelector(getStatusSending);
   const isDisabledInput = isSending;
+
+  if (isErrorSending && !isSending) {
+    toast.warn('Не удалось отправить комментарий');
+  }
 
   useEffect(() => {
     if (

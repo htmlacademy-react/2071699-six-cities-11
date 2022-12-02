@@ -13,6 +13,7 @@ import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import {getAuthorizationStatus, getAuthCheckedStatus} from '../../store/user-process/selectors';
 import {getOffersDataLoadingStatus, getErrorStatus} from '../../store/offers-data/selectors';
+import {getFavoritesDataLoadingStatus, getErrorFavoriteStatus} from '../../store/favotites-data/selectors';
 import {store} from '../../store';
 import {fetchFavorites} from '../../store/api-actions';
 import {useEffect} from 'react';
@@ -34,6 +35,12 @@ function App(): JSX.Element {
   const onReload = () => {
     dispatch(fetchFavorites());
   };
+  const isFavoritesDataLoading = useAppSelector(getFavoritesDataLoadingStatus);
+  const hasErrorFavorites = useAppSelector(getErrorFavoriteStatus);
+  if (hasErrorFavorites && !isFavoritesDataLoading && authorizationStatus === AuthorizationStatus.Auth) {
+    toast.warn('Не удалось загрузить список избранных предложений');
+  }
+
 
   if (!isAuthChecked || isOffersDataLoading) {
     return (
@@ -42,7 +49,6 @@ function App(): JSX.Element {
   }
 
   if (hasError) {
-    toast.warn('Список предложений не загружен');
     return (
       <ErrorScreen message={'список предложений'} onReload={onReload}/>);
   }

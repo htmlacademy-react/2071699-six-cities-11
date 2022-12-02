@@ -6,3 +6,4 @@ export const getComments = (state: State): CommentType[] => state[NameSpace.Data
 export const getCommentsDataLoadingStatus = (state: State): boolean => state[NameSpace.DataComments].isCommentsLoading;
 export const getErrorStatusComments = (state: State): boolean => state[NameSpace.DataComments].hasErrorComments;
 export const getStatusSending = (state: State): boolean => state[NameSpace.DataComments].isSending;
+export const getErrorSend = (state: State): boolean => state[NameSpace.DataComments].hasErrorSend;
