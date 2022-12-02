@@ -23,6 +23,7 @@ export type CommentsData = {
   isCommentsLoading: boolean;
   hasErrorComments: boolean;
   isSending: boolean;
+  hasErrorSend: boolean;
 };
 
 export type SortOffers = {

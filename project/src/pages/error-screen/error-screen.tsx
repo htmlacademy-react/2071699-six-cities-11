@@ -1,9 +1,16 @@
+import {toast} from 'react-toastify';
+import {useEffect} from 'react';
+
 type ErrorProps = {
   message: string;
   onReload: () => void;
 };
 
 function ErrorScreen({message, onReload}: ErrorProps): JSX.Element {
+
+  useEffect(() => {
+    toast.warn(`Не удалось загрузить ${message}`);
+  }, [message]);
 
   return (
     <>
