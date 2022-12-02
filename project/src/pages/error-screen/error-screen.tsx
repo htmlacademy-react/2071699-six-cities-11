@@ -1,45 +1,26 @@
-import {Fragment} from 'react';
-import {useAppDispatch} from '../../hooks';
-import {fetchOffersAction, fetchCommentsAction} from '../../store/api-actions';
-import {AppRoute} from '../../constants';
-
 type ErrorProps = {
-  pageType?: string;
-  paramsId? : string;
+  message: string;
+  onReload: () => void;
 };
 
-function ErrorScreen({pageType, paramsId}: ErrorProps): JSX.Element {
-  const dispatch = useAppDispatch();
-
+function ErrorScreen({message, onReload}: ErrorProps): JSX.Element {
 
   return (
-    pageType === AppRoute.Property && paramsId
-      ?
-      <Fragment>
-        <p className="error__text">Не удалось загрузить комментарии</p>
+    <>
+      <p className="error__text">{`Не удалось загрузить ${message}`}</p>
+      <div>
         <button
-          onClick={() => {
-            dispatch(fetchCommentsAction(paramsId));
-          }}
+          onClick={() => {onReload();}}
           className="replay replay--error"
           type="button"
         >
       Попробовать ещё раз
         </button>
-      </Fragment>
-      :
-      <Fragment>
-        <p className="error__text">Не удалось загрузить список предложений</p>
-        <button
-          onClick={() => {
-            dispatch(fetchOffersAction());
-          }}
-          className="replay replay--error"
-          type="button"
-        >
-        Попробовать ещё раз
-        </button>
-      </Fragment>
+      </div>
+      <div>
+
+      </div>
+    </>
   );
 }
 

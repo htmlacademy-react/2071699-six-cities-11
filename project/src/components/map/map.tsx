@@ -1,5 +1,5 @@
 import {useRef, useEffect} from 'react';
-import _ from 'lodash';
+import {isEqual} from 'lodash';
 import {Icon, Marker} from 'leaflet';
 import useMap from '../../hooks/use-map/use-map';
 import {OfferType, LocationType, CityType} from '../../types/offers';
@@ -11,6 +11,7 @@ type MapProps = {
   offers: OfferType[];
   selectedPoint?: LocationType | null;
   classNameMap: string;
+  paramsId : string;
 };
 
 const defaultCustomIcon = new Icon({
@@ -25,7 +26,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({city, offers, selectedPoint, classNameMap}: MapProps): JSX.Element {
+function Map({city, offers, selectedPoint, classNameMap, paramsId}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -41,14 +42,14 @@ function Map({city, offers, selectedPoint, classNameMap}: MapProps): JSX.Element
 
         marker
           .setIcon(
-            selectedPoint !== undefined && _.isEqual(point, selectedPoint)
+            selectedPoint !== undefined && isEqual(point, selectedPoint)
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(map);
       });
     }
-  }, [map, points, selectedPoint]);
+  }, [map, points, selectedPoint, paramsId]);
 
   useEffect(() => {
     if (map) {
@@ -56,7 +57,7 @@ function Map({city, offers, selectedPoint, classNameMap}: MapProps): JSX.Element
         lat: city.location.latitude,
         lng: city.location.longitude
       },
-      city.location.zoom);}}, [map, city]);
+      city.location.zoom);}}, [map, city, paramsId]);
 
   return <section className={`${classNameMap}__map`} ref={mapRef}></section>;
 }

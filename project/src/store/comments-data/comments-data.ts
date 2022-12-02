@@ -1,14 +1,15 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {NameSpace} from '../../constants';
 import {CommentsData} from '../../types/state';
-import {fetchCommentsAction} from '../api-actions';
+import {fetchCommentsAction, sendNewComment} from '../api-actions';
 import {CommentType} from '../../types/comments';
-import _ from 'lodash';
+import {sortBy} from 'lodash';
 
 const initialState: CommentsData = {
   comments: [],
   isCommentsLoading: false,
   hasErrorComments: false,
+  isSending: false,
 };
 
 export const commentsData = createSlice({
@@ -16,7 +17,7 @@ export const commentsData = createSlice({
   initialState,
   reducers: {
     loadCommentsNew: (state, action: PayloadAction<{comments: CommentType[]}>) => {
-      state.comments = _.sortBy(action.payload.comments, 'date').reverse();
+      state.comments = sortBy(action.payload.comments, 'date').reverse();
     }},
   extraReducers(builder) {
     builder
@@ -25,12 +26,18 @@ export const commentsData = createSlice({
         state.hasErrorComments = false;
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
-        state.comments = _.sortBy(action.payload, 'date').reverse();
+        state.comments = sortBy(action.payload, 'date').reverse();
         state.isCommentsLoading = false;
       })
       .addCase(fetchCommentsAction.rejected, (state) => {
         state.isCommentsLoading = false;
         state.hasErrorComments = true;
+      })
+      .addCase(sendNewComment.pending, (state) => {
+        state.isSending = true;
+      })
+      .addCase(sendNewComment.fulfilled, (state) => {
+        state.isSending = false;
       });
   }
 });

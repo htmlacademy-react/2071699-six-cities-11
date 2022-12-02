@@ -3,6 +3,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 import {OfferType} from '../types/offers';
 import {CommentType, CommentSendType} from '../types/comments';
+import {FavoriteSendType} from '../types/favotites';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {APIRoute, AppRoute} from '../constants';
@@ -10,6 +11,7 @@ import {saveToken, dropToken} from '../services/token';
 import {redirectToRoute} from './action';
 import {loadAuthInfo} from '../store/user-process/user-process';
 import {loadCommentsNew} from '../store/comments-data/comments-data';
+import {addFavorites, removeFavorites} from '../store/favotites-data/favotites-data';
 
 export const fetchOffersAction = createAsyncThunk<OfferType[], undefined, {
   dispatch: AppDispatch;
@@ -18,10 +20,11 @@ export const fetchOffersAction = createAsyncThunk<OfferType[], undefined, {
 }>(
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
-    const response = await api.get<OfferType[]>(APIRoute.Offers);
-    return response.data;
+    const {data} = await api.get<OfferType[]>(APIRoute.Offers);
+    return data;
   },
 );
+
 
 export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch;
@@ -86,4 +89,46 @@ export const sendNewComment = createAsyncThunk<void, CommentSendType, {
     const {data} = await api.post<CommentType[]>(`${APIRoute.Comments}/${hotelId}`, {comment, rating});
     dispatch(loadCommentsNew({comments: data}));
   }
+);
+
+
+export const fetchFavorites = createAsyncThunk<OfferType[], undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchFavorites',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<OfferType[]>(APIRoute.Favorite);
+    return data;
+  },
+);
+
+export const sendFavorites = createAsyncThunk<void, FavoriteSendType, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/sendFavorites',
+  async ({offer,status}, {dispatch, extra: api}) => {
+    const {data} = await api.post<OfferType>(`${APIRoute.Favorite}/${offer.id}/${status}`, offer);
+    if (status === 1) {
+      dispatch(addFavorites({offer: data}));
+    } else {
+      dispatch(removeFavorites({offer: data}));
+    }
+  }
+);
+
+
+export const fetchOffersNearby = createAsyncThunk<OfferType[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchOffersNearby',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<OfferType[]>(`${APIRoute.Offers}/${id}/nearby`);
+    return data;
+  },
 );

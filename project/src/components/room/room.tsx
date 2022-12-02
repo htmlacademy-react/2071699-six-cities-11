@@ -7,18 +7,20 @@ import HeaderMainPage from '../../components/main-page-header/main-page-header';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppSelector} from '../../hooks';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {useParams} from 'react-router-dom';
 
 type PropertyPageProps = {
   offer: OfferType;
-  offersForCity: OfferType[];
+  nearbyOffers: OfferType[];
 }
 
 
-function RoomPage ({offer, offersForCity}: PropertyPageProps): JSX.Element {
+function RoomPage ({offer, nearbyOffers}: PropertyPageProps): JSX.Element {
   const {id, images, isPremium, title, rating, typeOffer, bedrooms, maxAdults, price, goods, host, description} = offer;
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
-  const OffersNearby = offersForCity.filter((el) => el.id !== id);
+  const offersForMap = [...nearbyOffers].concat([offer]);
+  const params = useParams();
+  const paramsId = params.id ? params.id : '-1';
   return (
     <div className="page">
       <HeaderMainPage />
@@ -110,14 +112,14 @@ function RoomPage ({offer, offersForCity}: PropertyPageProps): JSX.Element {
             </div>
           </div>
           <section className="property__map">
-            <Map city={offer.city} offers={offersForCity} classNameMap={'property'}/>
+            <Map city={offer.city} offers={offersForMap} selectedPoint={offer.location} classNameMap={'property'} paramsId={paramsId}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <OfferNearbyList
-              offersList={OffersNearby}
+              offersList={nearbyOffers}
               pageType={AppRoute.Property}
               cityName={offer.city.name}
             />

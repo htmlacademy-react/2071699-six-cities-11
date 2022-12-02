@@ -1,17 +1,19 @@
 import ReviewsItem from '../../components/reviews-item/reviews-item';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import ErrorScreen from '../../pages/error-screen/error-screen';
-import {useAppSelector} from '../../hooks';
+import {useAppSelector, useAppDispatch} from '../../hooks';
 import {store} from '../../store';
 import {fetchCommentsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {getCommentsDataLoadingStatus, getComments, getErrorStatusComments} from '../../store/comments-data/selectors';
-import {AppRoute} from '../../constants';
+import {COUNT_COMMENTS_VIEW} from '../../constants';
 
 function ReviewsList () : JSX.Element {
   const isCommentsLoading = useAppSelector(getCommentsDataLoadingStatus);
   const hasErrorComments = useAppSelector(getErrorStatusComments);
+  const dispatch = useAppDispatch();
+
   const params = useParams();
   useEffect(() => {
     if(params.id) {
@@ -19,15 +21,21 @@ function ReviewsList () : JSX.Element {
     }
   }, [params.id]);
 
+  const onReload = () => {
+    if(params.id) {
+      dispatch(fetchCommentsAction(params.id.toString()));
+    }
+  };
+
   const commentsByOfferAll = useAppSelector(getComments);
-  const commentsByOffer = commentsByOfferAll.slice(0, 10);
-  const countComments = commentsByOfferAll ? commentsByOfferAll.length : 0;
+  const commentsByOffer = commentsByOfferAll.slice(0, COUNT_COMMENTS_VIEW);
+  const countComments = commentsByOffer ? commentsByOffer.length : 0;
 
 
   if (isCommentsLoading) {
     return (<LoadingScreen />);}
   if (hasErrorComments) {
-    return (<ErrorScreen pageType={AppRoute.Property} paramsId={params.id}/>); }
+    return (<ErrorScreen message={'комментарии'} onReload={onReload}/>); }
 
   return (
     <div>
