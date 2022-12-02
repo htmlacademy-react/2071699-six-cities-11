@@ -1,6 +1,6 @@
 import {useRef, useEffect} from 'react';
 import {isEqual} from 'lodash';
-import {Icon, Marker} from 'leaflet';
+import {Icon, Marker, LayerGroup, TileLayer} from 'leaflet';
 import useMap from '../../hooks/use-map/use-map';
 import {OfferType, LocationType, CityType} from '../../types/offers';
 import {IMG_MARKER_DEFAULT, IMG_MARKER_CURRENT} from '../../constants';
@@ -34,20 +34,32 @@ function Map({city, offers, selectedPoint, classNameMap, paramsId}: MapProps): J
 
   useEffect(() => {
     if (map) {
+      map.eachLayer((layer) => layer.remove());
+      const layer = new TileLayer(
+        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+        {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        }
+      );
+
+      map.addLayer(layer);
+
+      const markerGroup = new LayerGroup().addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
           lat: point.latitude,
           lng: point.longitude
         });
-
+        marker.addTo(markerGroup);
         marker
           .setIcon(
             selectedPoint !== undefined && isEqual(point, selectedPoint)
               ? currentCustomIcon
               : defaultCustomIcon
-          )
-          .addTo(map);
+          );
       });
+
     }
   }, [map, points, selectedPoint, paramsId]);
 
@@ -63,4 +75,3 @@ function Map({city, offers, selectedPoint, classNameMap, paramsId}: MapProps): J
 }
 
 export default Map;
-
