@@ -1,9 +1,9 @@
 import {MouseEvent} from 'react';
+import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeCity} from '../../store/offers-data/offers-data';
 import {resetSort} from '../../store/sort-process/sort-process';
 import {getSelectedCityName} from '../../store/offers-data/selectors';
-import {Link} from 'react-router-dom';
 import {AppRoute} from '../../constants';
 
 type OffersProps = {
@@ -13,7 +13,7 @@ type OffersProps = {
 function ListCities({cityName}: OffersProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const listItemHoverHandler = (event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
+  const handleItemClick = (event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
     event.preventDefault();
     const currentCity: string = event.currentTarget.innerText;
     dispatch(changeCity({currentCity}));
@@ -26,7 +26,7 @@ function ListCities({cityName}: OffersProps): JSX.Element {
       <Link
         to={AppRoute.Main}
         className={`locations__item-link tabs__item ${classActive}`}
-        onClick={listItemHoverHandler}
+        onClick={handleItemClick}
       >
         <span>{cityName}</span>
       </Link>

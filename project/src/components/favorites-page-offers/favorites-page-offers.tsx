@@ -1,7 +1,7 @@
+import {Link} from 'react-router-dom';
 import CardScreen from '../../components/card/card';
 import {OfferType} from '../../types/offers';
 import {AppRoute} from '../../constants';
-import {Link} from 'react-router-dom';
 import {useAppDispatch} from '../../hooks';
 import {changeCity} from '../../store/offers-data/offers-data';
 import {resetSort} from '../../store/sort-process/sort-process';
@@ -15,7 +15,7 @@ function FavoritesPageOffers({offersFavorList}: OffersListProps): JSX.Element {
   const dispatch = useAppDispatch();
   const citiesList: string[] = [...new Set(offersFavorList.map((el)=> el.city.name))];
 
-  const itemHoverHandler = (currentCity: string) => {
+  const handleItemClick = (currentCity: string) => {
     dispatch(changeCity({currentCity}));
     dispatch(resetSort());
   };
@@ -33,7 +33,7 @@ function FavoritesPageOffers({offersFavorList}: OffersListProps): JSX.Element {
                     <Link
                       className="locations__item-link"
                       to={AppRoute.Main}
-                      onClick={()=>itemHoverHandler(city)}
+                      onClick={()=>handleItemClick(city)}
                     >
                       <span>{city}</span>
                     </Link>

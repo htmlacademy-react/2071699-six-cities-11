@@ -1,10 +1,9 @@
+import {Link} from 'react-router-dom';
 import {useAppSelector} from '../../hooks';
-import {AuthorizationStatus} from '../../constants';
+import {AuthorizationStatus, AppRoute} from '../../constants';
 import HeaderAuth from '../../components/header-auth/header-auth';
 import HeaderNoAuth from '../../components/header-noauth/header-noauth';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../constants';
 
 
 function HeaderMainPage(): JSX.Element {

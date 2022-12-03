@@ -1,5 +1,6 @@
-import {OfferType} from '../../types/offers';
+import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
+import {OfferType} from '../../types/offers';
 import RoomPage from '../../components/room/room';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import useScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
@@ -8,7 +9,7 @@ import {getOffers} from '../../store/offers-data/selectors';
 import {getNearbyOffers} from '../../store/nearby-offers-data/selectors';
 import {store} from '../../store';
 import {fetchOffersNearby} from '../../store/api-actions';
-import {useEffect} from 'react';
+
 
 
 function PropertyPage (): JSX.Element {
