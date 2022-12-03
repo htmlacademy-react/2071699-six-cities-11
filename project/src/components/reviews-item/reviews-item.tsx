@@ -1,5 +1,5 @@
 import {CommentType} from '../../types/comments';
-
+import {PRC_WIDTH_STYLE} from '../../constants';
 type commentProps = {
   comment: CommentType;
 }
@@ -19,7 +19,7 @@ function ReviewsItem ({comment}: commentProps) : JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: `${20 * Math.round(comment.rating)}%`}}></span>
+            <span style={{width: `${PRC_WIDTH_STYLE * Math.round(comment.rating)}%`}}></span>
             <span className="visually-hidden">{comment.rating}</span>
           </div>
         </div>

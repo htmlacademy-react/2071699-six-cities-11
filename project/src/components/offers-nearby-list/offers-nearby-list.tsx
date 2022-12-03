@@ -1,10 +1,10 @@
+import {useParams} from 'react-router-dom';
 import OfferNearbyItem from '../../components/offers-nearby-item/offers-nearby-item';
 import {OfferType} from '../../types/offers';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {getNearbyDataLoadingStatus, getErrorStatusNearby} from '../../store/nearby-offers-data/selectors';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import ErrorScreen from '../../pages/error-screen/error-screen';
-import {useParams} from 'react-router-dom';
 import {fetchOffersNearby} from '../../store/api-actions';
 
 type OffersListProps = {

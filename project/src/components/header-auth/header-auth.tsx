@@ -1,9 +1,9 @@
-import {useAppDispatch} from '../../hooks';
+import {MouseEvent} from 'react';
 import {Link} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {AppRoute} from '../../constants';
 import {logoutAction} from '../../store/api-actions';
-import {useAppSelector} from '../../hooks';
-import {MouseEvent} from 'react';
+
 import {getAuthInfo} from '../../store/user-process/selectors';
 import {getFavorites} from '../../store/favotites-data/selectors';
 
@@ -13,7 +13,7 @@ function HeaderAuth(): JSX.Element {
   const authInfo = useAppSelector(getAuthInfo);
   const offersFavorList = useAppSelector(getFavorites);
 
-  const handleOnClick = (evt: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
+  const handleLoginClick = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
     dispatch(logoutAction());
   };
@@ -32,7 +32,7 @@ function HeaderAuth(): JSX.Element {
         <Link
           to={AppRoute.Main}
           className="header__nav-link"
-          onClick={handleOnClick}
+          onClick={handleLoginClick}
         >
           <span className="header__signout">Sign out</span>
         </Link>

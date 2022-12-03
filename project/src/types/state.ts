@@ -7,6 +7,7 @@ import {UserData} from '../types/user-data';
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   authInfo: UserData | null;
+  hasErrorLogin: boolean;
 };
 
 export type OffersData = {
