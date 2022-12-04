@@ -1,12 +1,12 @@
 import {useAppSelector} from '../../hooks';
 import {AppRoute} from '../../constants';
 import OffersList from '../../components/offers-list/offers-list';
-import SortForm from '../../components/sort-types/sort-types';
+import SortForm from '../sort-form/sort-form';
 import Map from '../../components/map/map';
 import {getSelectedPoint, getSelectedCityName, getOffers} from '../../store/offers-data/selectors';
 
 
-function MainPageWithOffers(): JSX.Element {
+function MainPageOffers(): JSX.Element {
   const currentCityName = useAppSelector(getSelectedCityName);
   const offersForCity = useAppSelector(getOffers);
   const selectedPoint = useAppSelector(getSelectedPoint);
@@ -32,4 +32,4 @@ function MainPageWithOffers(): JSX.Element {
 
   );
 }
-export default MainPageWithOffers;
+export default MainPageOffers;

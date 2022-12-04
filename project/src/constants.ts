@@ -11,13 +11,6 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum HouseTypes {
-  Apartment = 'apartment',
-  Room = 'room',
-  House = 'house',
-  Hotel = 'hotel'
-}
-
 export enum ImgMarker {
   MarkerDefault = 'img/pin.svg',
   MarkerCurrent = 'img/pin-active.svg'

@@ -1,17 +1,17 @@
 import {useAppSelector} from '../../hooks';
 import {CITIES} from '../../constants';
-import HeaderMainPage from '../../components/main-page-header/main-page-header';
+import HeaderMainPage from '../../components/header-main-page/header-main-page';
 import MainPageEmpty from '../../components/main-page-empty/main-page-empty';
-import MainPageWithOffers from '../../components/main-page-offers/main-page-offers';
+import MainPageOffers from '../../components/main-page-offers/main-page-offers';
 import ListCities from '../../components/list-cities/list-cities';
-import useScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
+import useScrollToUp from '../../hooks/use-scroll-to-up/use-scroll-to-up';
 import {OfferType} from '../../types/offers';
 import {getSelectedCityName} from '../../store/offers-data/selectors';
 import {getAllOffers} from '../../store/offers-data/selectors';
 
 
 function MainPage(): JSX.Element {
-  useScrollToTop();
+  useScrollToUp();
   const selectedCityName = useAppSelector(getSelectedCityName);
   const allOffers: OfferType[] = useAppSelector(getAllOffers);
 
@@ -32,7 +32,7 @@ function MainPage(): JSX.Element {
         <div className="cities">
           {offersCountForCity !== 0
             ?
-            <MainPageWithOffers/>
+            <MainPageOffers/>
             : <MainPageEmpty /> }
         </div>
       </main>
