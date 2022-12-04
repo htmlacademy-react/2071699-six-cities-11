@@ -1,4 +1,4 @@
-import CardScreen from '../card-screen/card-screen';
+import CardScreen from '../../components/card-screen/card-screen';
 import {OfferType} from '../../types/offers';
 
 type OffersListProps = {
