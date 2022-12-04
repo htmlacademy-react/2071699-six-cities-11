@@ -13,6 +13,7 @@ function SortForm(): JSX.Element {
 
   const handleChange = (event : MouseEvent<HTMLLIElement>) => {
     dispatch(sortOffersType({currentType: event.currentTarget.innerText}));
+    dispatch(sortMenuView());
   };
   return (
     <form className="places__sorting" action="#" method="get">

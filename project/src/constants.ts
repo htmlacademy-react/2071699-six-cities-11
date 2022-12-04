@@ -61,3 +61,4 @@ export enum LengthComment {
 }
 
 export const PRC_WIDTH_STYLE = 20;
+export const DEFAULT_CITY = 'Paris';
