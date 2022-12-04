@@ -1,5 +1,5 @@
 import {useParams} from 'react-router-dom';
-import OfferNearbyItem from '../offer-nearby-item/offer-nearby-item';
+import OfferNearbyItem from '../../components/offer-nearby-item/offer-nearby-item';
 import {OfferType} from '../../types/offers';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {getNearbyDataLoadingStatus, getErrorStatusNearby} from '../../store/nearby-offers-data/selectors';
