@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import ReviewsItem from '../../components/reviews-item/reviews-item';
+import ReviewsItem from '../reviews-item/reviews-item';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import ErrorScreen from '../../pages/error-screen/error-screen';
 import {useAppSelector, useAppDispatch} from '../../hooks';

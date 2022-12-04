@@ -1,8 +1,8 @@
 import {useAppSelector} from '../../hooks';
 import {AppRoute} from '../../constants';
-import OffersList from '../../components/offers-list/offers-list';
+import OffersList from '../offers-list/offers-list';
 import SortForm from '../sort-form/sort-form';
-import Map from '../../components/map/map';
+import Map from '../map/map';
 import {getSelectedPoint, getSelectedCityName, getOffers} from '../../store/offers-data/selectors';
 
 

@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import CardScreen from '../../components/card-screen/card-screen';
+import CardScreen from '../card-screen/card-screen';
 import {OfferType} from '../../types/offers';
 import {AppRoute} from '../../constants';
 import {useAppDispatch} from '../../hooks';

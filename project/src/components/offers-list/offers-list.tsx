@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {useState, useEffect} from 'react';
-import CardScreen from '../../components/card-screen/card-screen';
+import CardScreen from '../card-screen/card-screen';
 import {useAppSelector} from '../../hooks';
 import {getOffers} from '../../store/offers-data/selectors';
 import {SortTypes} from '../../constants';
