@@ -11,7 +11,6 @@ import {store} from '../../store';
 import {fetchOffersNearby} from '../../store/api-actions';
 
 
-
 function PropertyPage (): JSX.Element {
   useScrollToTop();
   const params = useParams();
