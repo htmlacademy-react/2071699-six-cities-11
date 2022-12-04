@@ -1,9 +1,9 @@
 import {OfferType} from '../../types/offers';
-import CommentForm from '../../components/comment-form/comment-form';
-import ReviewsList from '../../components/reviews-list/reviews-list';
-import OfferNearbyList from '../../components/offers-nearby-list/offers-nearby-list';
-import Map from '../../components/map/map';
-import HeaderMainPage from '../../components/main-page-header/main-page-header';
+import CommentForm from '../comment-form/comment-form';
+import ReviewsList from '../reviews-list/reviews-list';
+import OfferNearbyList from '../offer-nearby-list/offer-nearby-list';
+import Map from '../map/map';
+import HeaderMainPage from '../header-main-page/header-main-page';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppSelector} from '../../hooks';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';

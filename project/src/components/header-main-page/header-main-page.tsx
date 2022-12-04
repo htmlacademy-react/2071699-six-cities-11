@@ -3,8 +3,8 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeCity} from '../../store/offers-data/offers-data';
 import {resetSort} from '../../store/sort-process/sort-process';
 import {AuthorizationStatus, AppRoute, DEFAULT_CITY} from '../../constants';
-import HeaderAuth from '../../components/header-auth/header-auth';
-import HeaderNoAuth from '../../components/header-noauth/header-noauth';
+import HeaderAuth from '../header-auth/header-auth';
+import HeaderNoAuth from '../header-noauth/header-noauth';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 

@@ -4,7 +4,7 @@ import {useAppDispatch} from '../../hooks';
 import {changeCity} from '../../store/offers-data/offers-data';
 import {resetSort} from '../../store/sort-process/sort-process';
 
-function FooterFavoritesPage(): JSX.Element {
+function FavoritesPageFooter(): JSX.Element {
   const dispatch = useAppDispatch();
   const handleMainClick = () => {
     dispatch(changeCity({currentCity: DEFAULT_CITY}));
@@ -22,4 +22,4 @@ function FooterFavoritesPage(): JSX.Element {
     </footer>
   );}
 
-export default FooterFavoritesPage;
+export default FavoritesPageFooter;

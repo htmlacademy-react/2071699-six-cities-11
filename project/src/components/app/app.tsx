@@ -9,7 +9,7 @@ import PropertyPage from '../../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import ErrorScreen from '../../pages/error-screen/error-screen';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRoute from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import {getAuthorizationStatus, getAuthCheckedStatus} from '../../store/user-process/selectors';
 import {getOffersDataLoadingStatus, getErrorStatus} from '../../store/offers-data/selectors';
@@ -54,7 +54,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <HistoryRoute history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -91,7 +91,7 @@ function App(): JSX.Element {
           element={<NotFoundScreen />}
         />
       </Routes>
-    </HistoryRouter>
+    </HistoryRoute>
 
   );
 }
