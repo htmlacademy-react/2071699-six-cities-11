@@ -1,17 +1,16 @@
-import HeaderMainPage from '../../components/main-page-header/main-page-header';
-import FooterFavoritesPage from '../../components/favorites-page-footer/favorites-page-footer';
+import HeaderMainPage from '../../components/header-main-page/header-main-page';
+import FavoritesPageFooter from '../../components/favorites-page-footer/favorites-page-footer';
 import FavoritesPageEmpty from '../../components/favorites-page-empty/favorites-page-empty';
 import FavoritesPageOffers from '../../components/favorites-page-offers/favorites-page-offers';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import ErrorScreen from '../../pages/error-screen/error-screen';
-import useScrollToTop from '../../hooks/use-scroll-to-up/use-scroll-to-up';
+import useScrollToUp from '../../hooks/use-scroll-to-up/use-scroll-to-up';
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {getFavorites, getOffersDataLoadingStatus, getErrorFavoriteStatus} from '../../store/favotites-data/selectors';
-import {toast} from 'react-toastify';
+import {getFavorites, getFavoritesDataLoadingStatus, getErrorFavoriteStatus} from '../../store/favotites-data/selectors';
 import {fetchFavorites} from '../../store/api-actions';
 
 function FavoritesPage(): JSX.Element {
-  useScrollToTop();
+  useScrollToUp();
   const dispatch = useAppDispatch();
 
   const onReload = () => {
@@ -19,14 +18,13 @@ function FavoritesPage(): JSX.Element {
   };
   const offersFavorList = useAppSelector(getFavorites);
 
-  const isFavoritesDataLoading = useAppSelector(getOffersDataLoadingStatus);
+  const isFavoritesDataLoading = useAppSelector(getFavoritesDataLoadingStatus);
   const hasErrorFavorites = useAppSelector(getErrorFavoriteStatus);
 
   if (isFavoritesDataLoading) {
     return (<LoadingScreen />);
   }
   if (hasErrorFavorites && !isFavoritesDataLoading) {
-    toast.warn('Список избранных предложений не загружен');
     return (<ErrorScreen message={'список избранных предложений'} onReload={onReload}/>);
   }
 
@@ -35,7 +33,7 @@ function FavoritesPage(): JSX.Element {
     <div className="page">
       <HeaderMainPage />
       {offersFavorList.length === 0 ? <FavoritesPageEmpty/> : <FavoritesPageOffers offersFavorList={offersFavorList} />}
-      <FooterFavoritesPage />
+      <FavoritesPageFooter />
     </div>);
 }
 export default FavoritesPage;

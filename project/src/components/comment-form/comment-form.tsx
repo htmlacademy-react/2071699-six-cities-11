@@ -1,9 +1,10 @@
 import {Fragment} from 'react';
 import {useState, FormEvent, useEffect} from 'react';
+import {toast} from 'react-toastify';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {sendNewComment} from '../../store/api-actions';
-import {RATING_STARS, MIN_LENGTH_COMMENT, MAX_LENGTH_COMMENT} from '../../constants';
-import {getStatusSending} from '../../store/comments-data/selectors';
+import {RATING_STARS, LengthComment} from '../../constants';
+import {getStatusSending, getErrorSend} from '../../store/comments-data/selectors';
 
 
 type CommentProps = {
@@ -17,7 +18,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
   const [currentChecked, setCurrentChecked] = useState<string | null>(null);
   const [disabledButton, setDisabledButton] = useState(true);
 
-  const commentChangeHandle = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleCommentChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
     setCommentData({...commentData, [name]: value});
     evt.target.setAttribute('checked', 'true');
@@ -27,11 +28,11 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
   };
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (
-      commentData.comment.length >= MIN_LENGTH_COMMENT
-      && commentData.comment.length <= MAX_LENGTH_COMMENT
+      commentData.comment.length >= LengthComment.MinLength
+      && commentData.comment.length <= LengthComment.MaxLength
       && commentData.rating !== 0
     ) {
       dispatch(sendNewComment({
@@ -44,13 +45,18 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
       setDisabledButton(true);
     }
   };
+  const isErrorSending = useAppSelector(getErrorSend);
   const isSending = useAppSelector(getStatusSending);
   const isDisabledInput = isSending;
 
+  if (isErrorSending && !isSending) {
+    toast.warn('Не удалось отправить комментарий');
+  }
+
   useEffect(() => {
     if (
-      commentData.comment.length >= MIN_LENGTH_COMMENT
-      && commentData.comment.length <= MAX_LENGTH_COMMENT
+      commentData.comment.length >= LengthComment.MinLength
+      && commentData.comment.length <= LengthComment.MaxLength
       && commentData.rating !== 0
     ) {
       setDisabledButton(false);
@@ -69,7 +75,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
           value={item}
           id={`${item}-stars`}
           type="radio"
-          onChange={commentChangeHandle}
+          onChange={handleCommentChange}
           checked={currentChecked === item}
           disabled={isDisabledInput}
         />
@@ -83,7 +89,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
   );
 
   return (
-    <form className="reviews__form form" action="" method="post" onSubmit={handleSubmit}>
+    <form className="reviews__form form" action="" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
 
@@ -95,7 +101,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
         id="comment"
         name="comment"
         value={commentData.comment}
-        onChange={commentChangeHandle}
+        onChange={handleCommentChange}
         placeholder="Tell how was your stay, what you like and what can be improved"
         disabled={isDisabledInput}
       >

@@ -1,9 +1,9 @@
-import {OfferType} from '../../types/offers';
-import {AppRoute, AuthorizationStatus} from '../../constants';
 import {Link, useNavigate} from 'react-router-dom';
 import {useState, useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks';
 import {generatePath } from 'react-router';
+import {OfferType} from '../../types/offers';
+import {AppRoute, AuthorizationStatus, PRC_WIDTH_STYLE} from '../../constants';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getCurrentPoint} from '../../store/offers-data/offers-data';
 import {sendFavorites} from '../../store/api-actions';
 import {getFavorites} from '../../store/favotites-data/selectors';
@@ -126,7 +126,7 @@ function CardScreen(props:CardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${20 * Math.round(card.rating)}%`}}></span>
+            <span style={{width: `${PRC_WIDTH_STYLE * Math.round(card.rating)}%`}}></span>
             <span className="visually-hidden">{card.rating}</span>
           </div>
         </div>

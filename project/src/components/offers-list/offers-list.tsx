@@ -1,10 +1,11 @@
+import _ from 'lodash';
 import {useState, useEffect} from 'react';
-import CardScreen from '../../components/card/card';
+import CardScreen from '../card-screen/card-screen';
 import {useAppSelector} from '../../hooks';
 import {getOffers} from '../../store/offers-data/selectors';
 import {SortTypes} from '../../constants';
 import {getSortType} from '../../store/sort-process/selectors';
-import _ from 'lodash';
+
 
 type OffersListProps = {
   pageType: string;

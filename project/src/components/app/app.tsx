@@ -9,10 +9,11 @@ import PropertyPage from '../../pages/property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import ErrorScreen from '../../pages/error-screen/error-screen';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRoute from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import {getAuthorizationStatus, getAuthCheckedStatus} from '../../store/user-process/selectors';
 import {getOffersDataLoadingStatus, getErrorStatus} from '../../store/offers-data/selectors';
+import {getFavoritesDataLoadingStatus, getErrorFavoriteStatus} from '../../store/favotites-data/selectors';
 import {store} from '../../store';
 import {fetchFavorites} from '../../store/api-actions';
 import {useEffect} from 'react';
@@ -34,6 +35,12 @@ function App(): JSX.Element {
   const onReload = () => {
     dispatch(fetchFavorites());
   };
+  const isFavoritesDataLoading = useAppSelector(getFavoritesDataLoadingStatus);
+  const hasErrorFavorites = useAppSelector(getErrorFavoriteStatus);
+  if (hasErrorFavorites && !isFavoritesDataLoading && authorizationStatus === AuthorizationStatus.Auth) {
+    toast.warn('Не удалось загрузить список избранных предложений');
+  }
+
 
   if (!isAuthChecked || isOffersDataLoading) {
     return (
@@ -42,13 +49,12 @@ function App(): JSX.Element {
   }
 
   if (hasError) {
-    toast.warn('Список предложений не загружен');
     return (
       <ErrorScreen message={'список предложений'} onReload={onReload}/>);
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <HistoryRoute history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -85,7 +91,7 @@ function App(): JSX.Element {
           element={<NotFoundScreen />}
         />
       </Routes>
-    </HistoryRouter>
+    </HistoryRoute>
 
   );
 }

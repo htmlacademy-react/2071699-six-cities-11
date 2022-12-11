@@ -1,11 +1,11 @@
-import ReviewsItem from '../../components/reviews-item/reviews-item';
+import {useEffect} from 'react';
+import {useParams} from 'react-router-dom';
+import ReviewsItem from '../reviews-item/reviews-item';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import ErrorScreen from '../../pages/error-screen/error-screen';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {store} from '../../store';
 import {fetchCommentsAction} from '../../store/api-actions';
-import {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
 import {getCommentsDataLoadingStatus, getComments, getErrorStatusComments} from '../../store/comments-data/selectors';
 import {COUNT_COMMENTS_VIEW} from '../../constants';
 

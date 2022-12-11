@@ -11,16 +11,10 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum HouseTypes {
-  Apartment = 'apartment',
-  Room = 'room',
-  House = 'house',
-  Hotel = 'hotel'
+export enum ImgMarker {
+  MarkerDefault = 'img/pin.svg',
+  MarkerCurrent = 'img/pin-active.svg'
 }
-
-export const IMG_MARKER_DEFAULT = 'img/pin.svg';
-
-export const IMG_MARKER_CURRENT = 'img/pin-active.svg';
 
 export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
@@ -53,5 +47,11 @@ export enum NameSpace {
 }
 
 export const COUNT_COMMENTS_VIEW = 10;
-export const MIN_LENGTH_COMMENT = 50;
-export const MAX_LENGTH_COMMENT = 300;
+
+export enum LengthComment {
+  MinLength = 50,
+  MaxLength = 300,
+}
+
+export const PRC_WIDTH_STYLE = 20;
+export const DEFAULT_CITY = 'Paris';

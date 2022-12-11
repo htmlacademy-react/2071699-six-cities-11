@@ -7,6 +7,7 @@ import {UserData} from '../types/user-data';
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   authInfo: UserData | null;
+  hasErrorLogin: boolean;
 };
 
 export type OffersData = {
@@ -23,6 +24,7 @@ export type CommentsData = {
   isCommentsLoading: boolean;
   hasErrorComments: boolean;
   isSending: boolean;
+  hasErrorSend: boolean;
 };
 
 export type SortOffers = {

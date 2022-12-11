@@ -1,13 +1,12 @@
 import {OfferType} from '../../types/offers';
-import CommentForm from '../../components/comment-form/comment-form';
-import ReviewsList from '../../components/reviews-list/reviews-list';
-import OfferNearbyList from '../../components/offers-nearby-list/offers-nearby-list';
-import Map from '../../components/map/map';
-import HeaderMainPage from '../../components/main-page-header/main-page-header';
+import CommentForm from '../comment-form/comment-form';
+import ReviewsList from '../reviews-list/reviews-list';
+import OfferNearbyList from '../offer-nearby-list/offer-nearby-list';
+import Map from '../map/map';
+import HeaderMainPage from '../header-main-page/header-main-page';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppSelector} from '../../hooks';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
-import {useParams} from 'react-router-dom';
 
 type PropertyPageProps = {
   offer: OfferType;
@@ -19,8 +18,7 @@ function RoomPage ({offer, nearbyOffers}: PropertyPageProps): JSX.Element {
   const {id, images, isPremium, title, rating, typeOffer, bedrooms, maxAdults, price, goods, host, description} = offer;
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const offersForMap = [...nearbyOffers].concat([offer]);
-  const params = useParams();
-  const paramsId = params.id ? params.id : '-1';
+
   return (
     <div className="page">
       <HeaderMainPage />
@@ -112,7 +110,7 @@ function RoomPage ({offer, nearbyOffers}: PropertyPageProps): JSX.Element {
             </div>
           </div>
           <section className="property__map">
-            <Map city={offer.city} offers={offersForMap} selectedPoint={offer.location} classNameMap={'property'} paramsId={paramsId}/>
+            <Map city={offer.city} offers={offersForMap} selectedPoint={offer.location} classNameMap={'property'}/>
           </section>
         </section>
         <div className="container">

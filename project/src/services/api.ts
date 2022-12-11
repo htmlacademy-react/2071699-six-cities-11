@@ -1,15 +1,5 @@
-import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
-import {StatusCodes} from 'http-status-codes';
+import axios, {AxiosInstance, AxiosRequestConfig, AxiosError} from 'axios';
 import {getToken} from './token';
-import {toast} from 'react-toastify';
-
-const StatusCodeMapping: Record<number, boolean> = {
-  [StatusCodes.BAD_REQUEST]: true,
-  [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.NOT_FOUND]: true
-};
-
-const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
 
 
 const BACKEND_URL = 'https://11.react.pages.academy/six-cities';
@@ -35,18 +25,6 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.response.use(
     (response) => response,
     (error: AxiosError<{error: string}>) => {
-      if (error.response && shouldDisplayError(error.response)) {
-        const targetUrl = error.response.config.url;
-        const method = error.response.config.method;
-        if (targetUrl === '/login') {toast.warn('Статус пользователя не определен');}
-        if (targetUrl?.includes('/comments') && method === 'get') {toast.warn('Список комментариев не загружен');}
-        if (targetUrl?.includes('/comments') && method === 'post') {toast.warn('Комментарий не отправлен');}
-        if (targetUrl?.includes('/favorite') && method === 'post') {toast.warn('Предложение не добавлено в избранное');}
-
-        if (!targetUrl?.includes('/comments') && targetUrl !== '/login' && targetUrl !== '/hotels' && !targetUrl?.includes('/favorite'))
-        {toast.warn(error.response.data.error);}
-      }
-
       throw error;
     }
   );

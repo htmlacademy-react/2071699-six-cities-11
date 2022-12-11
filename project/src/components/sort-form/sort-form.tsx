@@ -11,15 +11,16 @@ function SortForm(): JSX.Element {
   const currentSortView = useAppSelector(getSortView);
   const dispatch = useAppDispatch();
 
-  const handleChange = (event : MouseEvent<HTMLLIElement, globalThis.MouseEvent>) => {
+  const handleChange = (event : MouseEvent<HTMLLIElement>) => {
     dispatch(sortOffersType({currentType: event.currentTarget.innerText}));
+    dispatch(sortMenuView());
   };
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0}>
+      <span className="places__sorting-type" tabIndex={0} onClick={()=>dispatch(sortMenuView())}>
         {currentSortType}
-        <svg className="places__sorting-arrow" width="7" height="4" onClick={()=>dispatch(sortMenuView())}>
+        <svg className="places__sorting-arrow" width="7" height="4" >
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
