@@ -59,7 +59,7 @@ describe('Async actions', () => {
     const fakeComments = Array.from({length: 5}, () => makeFakeComment());
     const fakeOffer = makeFakeOffer();
     mockAPI
-      .onGet(APIRoute.Comments)
+      .onGet(`${APIRoute.Comments}/${fakeOffer.id}`)
       .reply(200, fakeComments);
 
     const store = mockStore();
@@ -70,8 +70,7 @@ describe('Async actions', () => {
 
     expect(actions).toEqual([
       fetchCommentsAction.pending.type,
-      // fetchCommentsAction.fulfilled.type
-      fetchCommentsAction.rejected.type,
+      fetchCommentsAction.fulfilled.type
     ]);
   });
 
@@ -95,9 +94,9 @@ describe('Async actions', () => {
 
   it('should dispatch Load_nearby when GET /offers nearby', async () => {
     const fakeOffers = Array.from({length: 5}, () => makeFakeOffer());
-    const fakeOffer = makeFakeOffer();
+    const fakeOffer = fakeOffers[0];
     mockAPI
-      .onGet(APIRoute.Offers)
+      .onGet(`${APIRoute.Offers}/${fakeOffer.id}/nearby`)
       .reply(200, fakeOffers);
 
     const store = mockStore();
@@ -108,8 +107,7 @@ describe('Async actions', () => {
 
     expect(actions).toEqual([
       fetchOffersNearby.pending.type,
-      //fetchOffersNearby.fulfilled.type,
-      fetchOffersNearby.rejected.type,
+      fetchOffersNearby.fulfilled.type
     ]);
   });
 });
