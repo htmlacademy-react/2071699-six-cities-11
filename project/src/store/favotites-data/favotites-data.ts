@@ -11,7 +11,7 @@ const initialState: FavoritesData = {
 };
 
 
-export const favoritesOffersData = createSlice({
+export const favoritesData = createSlice({
   name: NameSpace.Favorites,
   initialState,
   reducers: {
@@ -39,4 +39,4 @@ export const favoritesOffersData = createSlice({
   }
 });
 
-export const {addFavorites, removeFavorites} = favoritesOffersData.actions;
+export const {addFavorites, removeFavorites} = favoritesData.actions;

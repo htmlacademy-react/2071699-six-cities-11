@@ -5,7 +5,7 @@ import {offersData} from './offers-data/offers-data';
 import {sortProcess} from './sort-process/sort-process';
 import {userProcess} from './user-process/user-process';
 import {nearbyOffersData} from './nearby-offers-data/nearby-offers-data';
-import {favoritesOffersData} from './favotites-data/favotites-data';
+import {favoritesData} from './favotites-data/favotites-data';
 
 export const rootReducer = combineReducers({
   [NameSpace.DataOffers]: offersData.reducer,
@@ -13,5 +13,5 @@ export const rootReducer = combineReducers({
   [NameSpace.Sort]: sortProcess.reducer,
   [NameSpace.User]: userProcess.reducer,
   [NameSpace.DataNearby]: nearbyOffersData.reducer,
-  [NameSpace.Favorites]: favoritesOffersData.reducer,
+  [NameSpace.Favorites]: favoritesData.reducer,
 });
