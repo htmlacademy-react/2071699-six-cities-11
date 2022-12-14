@@ -70,7 +70,7 @@ function Map({city, offers, selectedPoint, classNameMap}: MapProps): JSX.Element
       },
       city.location.zoom);}}, [map, city]);
 
-  return <section className={`${classNameMap}__map`} ref={mapRef}></section>;
+  return <section className={`${classNameMap}__map`} ref={mapRef} data-testid="map"></section>;
 }
 
 export default Map;

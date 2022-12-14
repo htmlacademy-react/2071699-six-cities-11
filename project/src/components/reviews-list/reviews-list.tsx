@@ -42,7 +42,7 @@ function ReviewsList () : JSX.Element {
       <h2 className="reviews__title">Reviews · <span className="reviews__amount">{countComments}</span></h2>
       <ul className="reviews__list">
         {commentsByOffer &&
-        commentsByOffer.map((comment) => <ReviewsItem key={comment.id} comment={comment} />)}
+        commentsByOffer.map((comment) => <ReviewsItem key={comment.id} comment={comment} data-testid="comment"/>)}
       </ul>
     </div>
   );

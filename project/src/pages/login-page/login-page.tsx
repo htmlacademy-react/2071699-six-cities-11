@@ -59,7 +59,7 @@ function LoginPage(): JSX.Element {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input className="login__input form__input" type="email" name="email"
-                  id="name" placeholder="Email" required ref={loginRef}
+                  id="name" placeholder="Email" required ref={loginRef} data-testid="mail"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -73,6 +73,7 @@ function LoginPage(): JSX.Element {
                   required
                   ref={passwordRef}
                   pattern="^(?=.*\d)(?=.*[a-zA-Z]).*$"
+                  data-testid="password"
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
