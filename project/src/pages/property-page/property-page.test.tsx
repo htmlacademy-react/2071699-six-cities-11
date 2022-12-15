@@ -21,7 +21,15 @@ const store = mockStore({
   DATA_NEAR: {nearbyOffers: nearOffers,},
   DATA_COMMENTS: {comments: [], isCommentsLoading: false,}
 });
+jest.mock('../../hooks/use-scroll-to-up/use-scroll-to-up', () => function useScrollToUp() {
+  return (
+    <div>fake useScrollToUp</div>
+  );
+});
+
 describe('Component: PropertyPage', () => {
+
+
   it('should render correctly', () => {
     render(
       <Provider store={store}>

@@ -17,6 +17,11 @@ const store = mockStore({
   FAVORITES: {favoritesOffers: fakeOffers, isOffersDataLoading: false},
 });
 const history = createMemoryHistory();
+jest.mock('../../hooks/use-scroll-to-up/use-scroll-to-up', () => function useScrollToUp() {
+  return (
+    <div>fake useScrollToUp</div>
+  );
+});
 
 describe('Component: FavoritesPage', () => {
   it('should render correctly', () => {

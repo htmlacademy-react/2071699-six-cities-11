@@ -18,7 +18,11 @@ const store = mockStore({
   SORT: {sortType: SortTypes.Popular, sortView: 'closed',}
 });
 const history = createMemoryHistory();
-
+jest.mock('../../hooks/use-scroll-to-up/use-scroll-to-up', () => function useScrollToUp() {
+  return (
+    <div>fake useScrollToUp</div>
+  );
+});
 describe('Component: MainPage', () => {
   it('should render correctly', () => {
     render(

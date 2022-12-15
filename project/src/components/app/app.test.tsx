@@ -29,7 +29,11 @@ const fakeApp = (
     </HistoryRouter>
   </Provider>
 );
-
+jest.mock('../../hooks/use-scroll-to-up/use-scroll-to-up', () => function useScrollToUp() {
+  return (
+    <div>fake useScrollToUp</div>
+  );
+});
 describe('Application Routing', () => {
   it('should render "WelcomeScreen" when user navigate to "/"', () => {
     history.push(AppRoute.Main);
