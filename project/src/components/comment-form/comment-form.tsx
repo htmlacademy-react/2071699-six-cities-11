@@ -91,7 +91,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
   return (
     <form className="reviews__form form" action="" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
+      <div className="reviews__rating-form form__rating" data-testid="RatingInputs">
 
         {RatingInputs}
 
@@ -104,6 +104,7 @@ function CommentForm({hotelId}:CommentProps): JSX.Element {
         onChange={handleCommentChange}
         placeholder="Tell how was your stay, what you like and what can be improved"
         disabled={isDisabledInput}
+        data-testid="textarea"
       >
       </textarea>
       <div className="reviews__button-wrapper">

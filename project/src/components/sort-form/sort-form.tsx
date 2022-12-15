@@ -18,9 +18,9 @@ function SortForm(): JSX.Element {
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0} onClick={()=>dispatch(sortMenuView())}>
+      <span className="places__sorting-type" tabIndex={0} onClick={()=>dispatch(sortMenuView())} data-testid="buttonSortMenu">
         {currentSortType}
-        <svg className="places__sorting-arrow" width="7" height="4" >
+        <svg className="places__sorting-arrow" width="7" height="4" data-testid="svg">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>

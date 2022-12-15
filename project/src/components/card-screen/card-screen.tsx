@@ -101,6 +101,7 @@ function CardScreen(props:CardProps): JSX.Element {
         <Link
           to={generatePath(`${AppRoute.Property}/:id`, { id: card.id.toString()})}
           onClick={() => dispatch(getCurrentPoint({offer: card, isAction:false}))}
+          data-testid="link"
         >
           <img className="place-card__image" src={card.previewImage} width={settingPage.widthImg} height={settingPage.heightImg} alt="Place" />
         </Link>
